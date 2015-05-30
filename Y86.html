@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Bootstrap 实例</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+    <!-- 可选的Bootstrap主题文件（一般不用引入） -->
+    <!--<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">-->
+
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="col-xs-6 span9">
+        </div>
+        <div class="col-xs-6 span3">
+        </div>
+    </div>
+    <div class="row-fluid">
+        <div class="span12">
+            <div class="row-fluid">
+                <div class="span6">
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <button id="run" class="btn btn-primary btn-small" type="button">运行</button>
+                        </div>
+                        <div class="span6">
+                            <input id="input_file" type="file" class="btn btn-primary btn-file">
+                        </div>
+                    </div>
+                </div>
+                <div class="span6">
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="span12">
+                    <!--< class="row-fluid">-->
+                        <div class="span6">
+                            <table class="table" >
+                                <thead>
+                                <tr>
+                                    <th>
+                                        指令
+                                    </th>
+                                    <th>
+                                        注释
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody id="isa">
+                                <tr class="success">
+                                    <td>
+                                        1
+                                    </td>
+                                    <td>
+                                        TB - Monthly
+                                    </td>
+                                </tr>
+                                <tr class="error">
+                                    <td>
+                                        2
+                                    </td>
+                                    <td>
+                                        TB - Monthly
+                                    </td>
+                                </tr>
+                                <tr class="warning">
+                                    <td>
+                                        3
+                                    </td>
+                                    <td>
+                                        TB - Monthly
+                                    </td>
+                                </tr>
+                                <tr class="info">
+                                    <td>
+                                        4
+                                    </td>
+                                    <td>
+                                        TB - Monthly
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script src="y86.js">
+</script>
+<script>
+    var InputFile = document.getElementById('input_file');
+    var IsaArray;
+    IsaArray = [];
+    var DesArray;
+    DesArray = [];
+    var IS={};
+    //事件监听
+    input_file.addEventListener('change', function (e) {
+        /*
+         e.currentTarget代表触发此事件的对象即input_file
+         为什么不直接使用函数外面的input_file呢
+         因为直接使用函数外面的input_file就代表此函数依赖于外部变量了
+         一个函数应该越独立越好，减少依赖
+         */
+        var input_file = e.currentTarget;
+        cyclecounter=0;
+        /*
+         选择的文件会存放在input的files数组里
+         HTML5允许选择多个文件
+         files[0]即为选择的第一个文件
+         */
+        var file = input_file.files[0];
+        readBlobAsText(file, function (err, result) {
+            if (err) {
+                alert(err.name + '\n' + err.message);
+                return;
+            }
+//            alert(result);
+            IsaArray=result.split("\n");
+            $("#isa").empty();
+            var temp;
+            var is;
+            for(var  x in IsaArray) {
+                temp=IsaArray[x].split("|");
+                is=temp[0].split()
+                console.log(temp[1]);
+                DesArray[x]=temp[1];
+                IsaArray[x]=temp[0];
+                $("#isa").append();
+                $("#isa").append("<tr  class=\"info\">"+"<td>" + IsaArray[x] + "</td>"+"<td>"+DesArray[x]+"</td>"+"</tr>")
+                is=temp[0].split(":");
+                if(is[1]&&is[1].length>1){
+                    //$.trim(is[1])去掉字符串首末空格 parseInt()将字符串转为整数
+                    IS[parseInt(is[0])]=$.trim(is[1]);
+                }
+            }
+            init();
+            console.log("IS:",IS);
+        });
+    });
+    /*
+     读取Blob为Text
+     参数说明
+     blob: 要读取的Blob对象
+     callback: 读取完成后的回调函数
+     回调参数
+     err: 若读取成功此参数为null，若读取失败此参数为Error对象
+     result: 若读取成功此参数为读取结果，若读取失败此参数为null
+     */
+    function readBlobAsText(blob, callback) {
+        var fr = new FileReader();
+        fr.onload = function (e) {
+            var fr = e.currentTarget;
+            if (typeof callback === 'function') {
+                callback.call(fr, null, fr.result);
+            }
+        };
+        fr.onerror = function (e) {
+            var fr = e.currentTarget;
+            if (typeof callback === 'function') {
+                callback.call(fr, fr.error, null);
+            }
+        };
+        fr.readAsText(blob);
+    }
+</script>
+<!--button function-->
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#run").click(function(){
+			$("#text").append("OK! ");
+//            alert($("#text").propertyName());
+			alert("hello world");
+		});
+	});
+</script>
+</html>
