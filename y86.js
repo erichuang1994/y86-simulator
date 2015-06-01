@@ -143,6 +143,8 @@ function init(){
         r[R[x]]=0;
         console.log("init register ", R[x]);
     }
+    Current=CycleStore.createNew();
+    New=CycleStore.createNew();
     //r[R.esp]=244;
     //r[R.ebp]=244;
     console.log("init success");
@@ -169,8 +171,8 @@ function tlend(str){
     var ans=str.substr(6,2)+str.substr(4,2)+str.substr(2,2)+str.substr(0,2);
     return ans;
 }
-var Current=CycleStore.createNew();
-var New=CycleStore.createNew();
+var Current;
+var New;
 var Temp;
 function run(){
     //for(var x=1;x<=61;x++){
@@ -182,19 +184,70 @@ function run(){
         $('input[id=input_file]').click();
         return false;
     }
-    while(onecycle()){
-        showcycle(Current);
+    do{
         update(Current);
-    };
-    showcycle(New);
+    }while(onecycle());
+    //update(Current);
+}
+var Hz;
+var Pause=false;
+function moha(){
+    //for(var x=1;x<=61;x++){
+    //    if(!onecycle())
+    //        break;
+    //}
+    Pause=false;
+    if(Hasload==false){
+        alert("跑也要按照基本法呀，中国有句古话，叫有代码才能跑！");
+        $('input[id=input_file]').click();
+        return false;
+    }
+    Hz=parseInt($("#hz").val());
+    if(Hz==0) {
+        do {
+            update(Current);
+            //setTimeout("timedCount()", 1000);
+        } while (onecycle());
+    }
+    //update(Current);
+    else {
+        onehz();
+    }
+}
+
+//pause
+function pause(){
+    Pause=true;
+}
+//run in 1HZ
+function onehz(){
+    if(Pause==false) {
+        update(Current);
+        if (Current.W_icode != icode.halt) {
+            onecycle();
+            setTimeout("onehz()", 1000 / Hz);
+        }
+    }
+}
+
+//step
+function step(){
+    Pause=false;
+    onecycle();
+    update(Current);
 }
 
 //reset
 function reset(){
+    init();
     Current=CycleStore.createNew();
+    update(Current);
 }
 //执行单个周期
 function onecycle(){
+    if(Current.W_icode==icode.halt){
+        return false;
+    }
     Current=New;
     New=CycleStore.createNew();
     New.cyclenum=Current.cyclenum+1;
@@ -574,16 +627,11 @@ function onecycle(){
     var M_stall=0;
     var M_bubble=0;
     //showcycle(Current);
-    if(New.W_icode==icode.halt){
-        return false;
-    }
-    else{
-        return true;
-    }
+    return true;
     //showcycle(New);
 }
 function show32bit(num){
-    str=num.toString(16);
+    str=(num>>>0).toString(16);
     var len=str.length;
     for(;len<8;len++){
         str="0"+str;
@@ -591,13 +639,13 @@ function show32bit(num){
     return "0x"+str;
 }
 function hex(num){
-    return "0x"+num;
+    return "0x"+num.toString(16);
 }
 function update(One){
     $("#F_predPC").html(show32bit(One.F_predPC));
     $("#D_icode").html(hex(One.D_icode));
     $("#D_ifun").html(hex(One.D_ifun));
-    $("#D_rA").html(hex(One,D_rA));
+    $("#D_rA").html(hex(One.D_rA));
     $("#D_rB").html(hex(One.D_rB));
     $("#D_valC").html(show32bit(One.D_valC));
     $("#D_valP").html(show32bit(One.D_valP));
@@ -608,6 +656,28 @@ function update(One){
     $("#E_valB").html(show32bit(One.E_valB));
     $("#E_dstE").html(hex(One.E_dstE));
     $("#E_dstM").html(hex(One.E_dstM));
+    $("#E_srcA").html(hex(One.E_srcA));
+    $("#E_srcB").html(hex(One.E_srcB));
+    $("#M_icode").html(hex(One.M_icode));
+    $("#M_Bch").html(One.M_Bch.toString());
+    $("#M_valE").html(show32bit(One.M_valE));
+    $("#M_valA").html(show32bit(One.M_valA));
+    $("#M_dstE").html(hex(One.M_dstE));
+    $("#M_dstM").html(hex(One.M_dstM));
+    $("#W_icode").html(hex(One.W_icode));
+    $("#W_valE").html(show32bit(One.W_valE));
+    $("#W_valM").html(show32bit(One.W_valM));
+    $("#W_dstE").html(hex(One.W_dstE));
+    $("#W_dstM").html(hex(One.W_dstM));
+    $("#cyclenum").html(One.cyclenum);
+    $("#eax").html(show32bit(r[R.eax]));
+    $("#ecx").html(show32bit(r[R.ecx]));
+    $("#edx").html(show32bit(r[R.edx]));
+    $("#ebx").html(show32bit(r[R.ebx]));
+    $("#esp").html(show32bit(r[R.esp]));
+    $("#ebp").html(show32bit(r[R.ecx]));
+    $("#esi").html(show32bit(r[R.esi]));
+    $("#edi").html(show32bit(r[R.edi]));
 }
 function onestep(){
     onecycle();
