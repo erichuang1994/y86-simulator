@@ -1,4 +1,4 @@
-//TODO:执行周期
+//TODO:指令数据与栈空间不重叠
 //枚举icode,register,ifun,值得注意的是cmovl与rrmovl都是2
 var icode={nop:"0",halt:"1",rrmovl:"2",irmovl:"3",rmmovl:"4",mrmovl:"5",opl:"6",jxx:"7",cmovxx:"2",call:"8",ret:"9",pushl:"a",popl:"b"};
 var ficode=["0","1","2","3","4","5","6","7","8","9","a","b"];
@@ -172,7 +172,27 @@ function tlend(str){
 var Current=CycleStore.createNew();
 var New=CycleStore.createNew();
 var Temp;
+function run(){
+    //for(var x=1;x<=61;x++){
+    //    if(!onecycle())
+    //        break;
+    //}
+    if(Hasload==false){
+        alert("跑也要按照基本法呀，中国有句古话，叫有代码才能跑！");
+        $('input[id=input_file]').click();
+        return false;
+    }
+    while(onecycle()){
+        showcycle(Current);
+        update(Current);
+    };
+    showcycle(New);
+}
 
+//reset
+function reset(){
+    Current=CycleStore.createNew();
+}
 //执行单个周期
 function onecycle(){
     Current=New;
@@ -553,7 +573,7 @@ function onecycle(){
     //At most one of these can be true.
     var M_stall=0;
     var M_bubble=0;
-    showcycle(Current);
+    //showcycle(Current);
     if(New.W_icode==icode.halt){
         return false;
     }
@@ -562,13 +582,36 @@ function onecycle(){
     }
     //showcycle(New);
 }
-function run(){
-    //for(var x=1;x<=61;x++){
-    //    if(!onecycle())
-    //        break;
-    //}
-    while(onecycle()){};
-    showcycle(New);
+function show32bit(num){
+    str=num.toString(16);
+    var len=str.length;
+    for(;len<8;len++){
+        str="0"+str;
+    }
+    return "0x"+str;
+}
+function hex(num){
+    return "0x"+num;
+}
+function update(One){
+    $("#F_predPC").html(show32bit(One.F_predPC));
+    $("#D_icode").html(hex(One.D_icode));
+    $("#D_ifun").html(hex(One.D_ifun));
+    $("#D_rA").html(hex(One,D_rA));
+    $("#D_rB").html(hex(One.D_rB));
+    $("#D_valC").html(show32bit(One.D_valC));
+    $("#D_valP").html(show32bit(One.D_valP));
+    $("#E_icode").html(hex(One.E_icode));
+    $("#E_ifun").html(hex(One.E_ifun));
+    $("#E_valC").html(show32bit(One.E_valC));
+    $("#E_valA").html(show32bit(One.E_valA));
+    $("#E_valB").html(show32bit(One.E_valB));
+    $("#E_dstE").html(hex(One.E_dstE));
+    $("#E_dstM").html(hex(One.E_dstM));
+}
+function onestep(){
+    onecycle();
+    update(Current);
 }
 function showcycle(One){
     //console.log("Current pc 0x:",One.f_pc.toString(16));
