@@ -733,7 +733,7 @@ span.green { background-color: #41CA83; }
 .general-stats .Memory li span { display: block; padding: 2px 5px 1px 5px; font-size: 11px; line-height: 19px; }
 /*Write Back*/
 .general-stats .WriteBack:after, .general-stats .body:after { content: ""; clear: both; display: block; }
-.general-stats li { float: left; text-align: center; width: 60.5px; white-space: nowrap; display: block; }
+.general-stats li { float: left; text-align: center; width: 59.5px; white-space: nowrap; display: block; }
 .general-stats .WriteBack { color: #fff; font-weight: bold; display: block; border: 1px solid #41474f; }
 .general-stats .WriteBack li { border-left: 1px solid #41474f; background: #4F4F4F; }
 .general-stats .WriteBack li:first-child { border-left: 0; width: 68px; }

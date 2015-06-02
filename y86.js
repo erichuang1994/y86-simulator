@@ -243,6 +243,15 @@ function reset(){
     Current=CycleStore.createNew();
     update(Current);
 }
+
+//save
+var savestr="";
+function save() {
+        // works in firefox, and chrome 11
+        var text ="hello world\n \tI can fan";
+        var data = "data:x-application/text,"+encodeURIComponent(text);
+        window.open(data);
+}
 //执行单个周期
 function onecycle(){
     if(Current.W_icode==icode.halt){
@@ -641,7 +650,41 @@ function show32bit(num){
 function hex(num){
     return "0x"+num.toString(16);
 }
+//String format
+String.format = function(src){
+    if (arguments.length == 0) return null;
+    var args = Array.prototype.slice.call(arguments, 1);
+    return src.replace(/\{(\d+)\}/g, function(m, i){
+        return args[i];
+    });
+};
 function update(One){
+    //set savestr ,it's a bad implement
+    var template="Cycle_{0}\n" +
+        "--------------------\n" +
+        "FETCH:\n" +
+        "\tF_predPC\t= {1}\n" +
+        "DECODE:\n" +
+        "\tD_icode\t= {2}\n" +
+        "\tD_ifun\t= {3}\n" +
+        "\tD_rA\t= {4}\n" +
+        "\tD_rB\t= {5}\n" +
+        "\tD_valC\t= {6}\n" +
+        "\tD_valP\t= {7}\n" +
+        "EXCUTE:\n" +
+        "\tE_icode\t= {8}\n" +
+        "\tE_ifun\t= {9}\n" +
+        "\tE_valC\t= {10}\n" +
+        "\tE_valA\t= {11}\n" +
+        "\tE_valB\t= {12}\n" +
+        "\tE_dstE\t= {13}\n" +
+        "\tE_dstM\t= {14}\n" +
+        "\tE_srcA\t= {15}\n" +
+        "\tE_srcB\t= {16}\n" +
+        "\tE_srcB\t= {17}\n" +
+        "MEMORY:\n" +
+        "\tM_icode\t"
+    //end
     $("#F_predPC").html(show32bit(One.F_predPC));
     $("#D_icode").html(hex(One.D_icode));
     $("#D_ifun").html(hex(One.D_ifun));
