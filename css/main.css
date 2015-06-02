@@ -2364,7 +2364,7 @@ input[type="checkbox"] { margin: 3px 0 0; margin-top: 1px \9; *margin-top: 0; li
 .rtl-inputs [class*="span"], .rtl-inputs [class^="span"] { float: right!important; }
 
 select { height: 30px; *margin-top: 4px; line-height: 30px; padding: 0; }
-select { width: 220px; background-color: #ffffff; border: 1px solid #d5d5d5; }
+select { width: 110px; background-color: #ffffff; border: 1px solid #d5d5d5; }
 select:focus, input[type="file"]:focus, input[type="radio"]:focus, input[type="checkbox"]:focus { outline: 0; }
 
 .uneditable-input, .uneditable-textarea { color: #999999; cursor: not-allowed; background-color: #fcfcfc; border-color: #cccccc;

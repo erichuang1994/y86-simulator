@@ -233,8 +233,9 @@ function onehz(){
 //step
 function step(){
     Pause=false;
-    onecycle();
-    update(Current);
+    if(onecycle()) {
+        update(Current);
+    }
 }
 
 //reset
@@ -242,6 +243,7 @@ function reset(){
     init();
     Current=CycleStore.createNew();
     update(Current);
+    savestr=""
 }
 
 //save
@@ -249,7 +251,7 @@ var savestr="";
 function save() {
         // works in firefox, and chrome 11
         var text ="hello world\n \tI can fan";
-        var data = "data:x-application/text,"+encodeURIComponent(text);
+        var data = "data:x-application/text,"+encodeURIComponent(savestr);
         window.open(data);
 }
 //执行单个周期
@@ -257,7 +259,6 @@ function onecycle(){
     if(Current.W_icode==icode.halt){
         return false;
     }
-    Current=New;
     New=CycleStore.createNew();
     New.cyclenum=Current.cyclenum+1;
   //Fetch Stage
@@ -636,6 +637,7 @@ function onecycle(){
     var M_stall=0;
     var M_bubble=0;
     //showcycle(Current);
+    Current=New;
     return true;
     //showcycle(New);
 }
@@ -658,32 +660,47 @@ String.format = function(src){
         return args[i];
     });
 };
+var template="Cycle_{0}\n" +
+    "--------------------\n" +
+    "FETCH:\n" +
+    "\tF_predPC\t= {1}\n" +
+    "DECODE:\n" +
+    "\tD_icode\t\t= {2}\n" +
+    "\tD_ifun\t\t= {3}\n" +
+    "\tD_rA\t\t= {4}\n" +
+    "\tD_rB\t\t= {5}\n" +
+    "\tD_valC\t\t= {6}\n" +
+    "\tD_valP\t\t= {7}\n" +
+    "EXCUTE:\n" +
+    "\tE_icode\t\t= {8}\n" +
+    "\tE_ifun\t\t= {9}\n" +
+    "\tE_valC\t\t= {10}\n" +
+    "\tE_valA\t\t= {11}\n" +
+    "\tE_valB\t\t= {12}\n" +
+    "\tE_dstE\t\t= {13}\n" +
+    "\tE_dstM\t\t= {14}\n" +
+    "\tE_srcA\t\t= {15}\n" +
+    "\tE_srcB\t\t= {16}\n" +
+    "MEMORY:\n" +
+    "\tM_icode\t\t= {17}\n" +
+    "\tM_Bch\t\t= {18}\n" +
+    "\tM_valE\t\t= {19}\n" +
+    "\tM_valA\t\t= {20}\n" +
+    "\tM_dstE\t\t= {21}\n" +
+    "\tM_dstM\t\t= {22}\n" +
+    "WRITE BACK:\n" +
+    "\tW_icode\t\t= {23}\n" +
+    "\tW_valE\t\t= {24}\n" +
+    "\tW_valM\t\t= {25}\n" +
+    "\tW_DstE\t\t= {26}\n" +
+    "\tW_dstM\t\t= {27}\n\n";
 function update(One){
     //set savestr ,it's a bad implement
-    var template="Cycle_{0}\n" +
-        "--------------------\n" +
-        "FETCH:\n" +
-        "\tF_predPC\t= {1}\n" +
-        "DECODE:\n" +
-        "\tD_icode\t= {2}\n" +
-        "\tD_ifun\t= {3}\n" +
-        "\tD_rA\t= {4}\n" +
-        "\tD_rB\t= {5}\n" +
-        "\tD_valC\t= {6}\n" +
-        "\tD_valP\t= {7}\n" +
-        "EXCUTE:\n" +
-        "\tE_icode\t= {8}\n" +
-        "\tE_ifun\t= {9}\n" +
-        "\tE_valC\t= {10}\n" +
-        "\tE_valA\t= {11}\n" +
-        "\tE_valB\t= {12}\n" +
-        "\tE_dstE\t= {13}\n" +
-        "\tE_dstM\t= {14}\n" +
-        "\tE_srcA\t= {15}\n" +
-        "\tE_srcB\t= {16}\n" +
-        "\tE_srcB\t= {17}\n" +
-        "MEMORY:\n" +
-        "\tM_icode\t"
+    savestr=savestr+String.format(template,One.cyclenum,show32bit(One.F_predPC),
+        hex(One.D_icode),hex(One.D_ifun),hex(One.D_rA),hex(One.D_rB),show32bit(One.D_valC),show32bit(One.D_valP),
+        hex(One.E_icode),hex(One.E_ifun),show32bit(One.E_valC),show32bit(One.E_valA),show32bit(One.E_valB),hex(One.E_dstE),hex(One.E_dstM),hex(One.E_srcA),hex(One.E_srcB),
+        hex(One.M_icode),One.M_Bch.toString(),show32bit(One.M_valE),show32bit(One.M_valA),hex(One.M_dstE),hex(One.M_dstM),
+        hex(One.W_icode),show32bit(One.W_valE),show32bit(One.W_valM),hex(One.W_dstE),hex(One.W_dstM));
     //end
     $("#F_predPC").html(show32bit(One.F_predPC));
     $("#D_icode").html(hex(One.D_icode));
