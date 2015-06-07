@@ -1,4 +1,4 @@
-//TODO:指令数据与栈空间不重叠
+//TODO:Debug,OF处理
 //枚举icode,register,ifun,值得注意的是cmovl与rrmovl都是2
 var icode={nop:"0",halt:"1",rrmovl:"2",irmovl:"3",rmmovl:"4",mrmovl:"5",opl:"6",jxx:"7",cmovxx:"2",call:"8",ret:"9",pushl:"a",popl:"b"};
 var ficode=["0","1","2","3","4","5","6","7","8","9","a","b"];
@@ -102,22 +102,7 @@ var CycleStore={
             return parseInt(substr,16);
         };
         cycle.get_valP=function(){
-            //if(cycle.cyclenum==-1){
-            //    console.log("Current pc",cycle.f_pc);
-            //    console.log("Current f_icode",cycle.f_icode);
-            //    console.log("need_regids",cycle.need_regids);
-            //    console.log("need valC",cycle.need_valC);
-            //}
             return cycle.f_pc+(cycle.is.length/2);
-            //if(cycle.need_regids){
-            //    console.log("have judge need_regids");
-            //    ans=ans+1;
-            //}
-            //if(cycle.need_valC){
-            //    console.log("have judge need_regids");
-            //    ans=ans+4;
-            //}
-            //return ans;
         }
         return cycle;
     }
@@ -244,6 +229,20 @@ function reset(){
     Current=CycleStore.createNew();
     update(Current);
     savestr=""
+    $("#Stack").empty();
+}
+function debug(){
+    var execstr=$("#Debug").val();
+    try  {
+         eval(execstr);
+        //$("#Debug").val()="";
+    }
+    catch(exception) {
+        alert(exception);
+        alert("非法指令")
+        console.log("inster:",execstr);
+    }
+    $("#Debug").val("");
 }
 
 //save
@@ -251,8 +250,90 @@ var savestr="";
 function save() {
         // works in firefox, and chrome 11
         var text ="hello world\n \tI can fan";
-        var data = "data:x-application/text,"+encodeURIComponent(savestr);
-        window.open(data);
+        var blob=new Blob([savestr], {type: "text/plain;charset=utf-8"});
+        //var data = "data:x-application/text,"+encodeURIComponent(savestr);
+        //window.open(data);
+        saveAs(blob,"asum.txt");
+}
+//to three bit hex
+function hex3bit(num){
+    var ans=num.toString(16);
+    var len=ans.length;
+    for(;len<3;len++){
+        ans="0"+ans;
+    }
+    return "0x"+ans;
+}
+var readtemplate="<p id=\"{0}\" class=\"muted\">0x{1}:{2}</p>";
+var writetemplate="<p class=\"text-warning\">0x{0}:{1}</p>";
+var nurmaltemplate="<p class=\"muted\">0x{0}:{1}</p>";
+//todo:动画特效，栈只会减不会加，所以发生读写的时候再更新即可
+function readupdate(mem_addr,val){
+    var par="#Stack"+mem_addr.toString();
+    //console.log("parameter:",par);
+    //$(par).animo({ animation: 'bounceInRight', duration: 2 });
+    if($(par)[0]!=undefined) {
+        console.log($(par));
+        move(par)
+            .set('background-color', 'pink')
+            .duration(1000)
+            .end(function () {
+                move(par)
+                    .set('background-color', 'white')
+                    .end();
+            });
+    }
+}
+function writeupdate(mem_addr,val){
+    var par="#Stack"+mem_addr.toString();
+    var htmltext="<p id=\"Stack{0}\" class=\"muted\">{1}:0x{2}</p>";
+    if(IS[mem_addr]!=undefined){
+        //$(par).animo( { animation: 'bounceInRight', duration: 2 });
+        $(par).snabbt({
+            fromRotation: [0, 0, -2*Math.PI],
+            position: [0, 0, 0],
+            easing: 'spring',
+            springConstant: 0.2,
+            springDeceleration: 0.90,
+            springMass: 10,
+        });
+        $(par).html(val);
+    }
+    else{
+        var str=String.format(htmltext,mem_addr.toString(),hex3bit(mem_addr),val);
+        console.log("insert:",str);
+        $("#Stack").prepend(str);
+        $(par).snabbt({
+            position: [0, 0, 0],
+            rotation: [0, 0, 2*Math.PI],
+            easing: 'spring',
+            springConstant: 0.3,
+            springDeceleration: 0.8,
+        }).snabbt({
+            position: [0, 0, 0],
+            easing: 'spring',
+            springConstant: 0.3,
+            springDeceleration: 0.8,
+        });
+        //$(par).html(val);
+    }
+}
+//animations
+function animation(){
+    //$('#animationstest').animo( { animation: 'tada' } );
+    //$('#ZF').animo( { animation: 'bounceInRight', duration: 2 });
+    //$("#animationstest").html("hello world");
+    $("#ZF").snabbt({
+        position: [100, 0, 0],
+        easing: 'ease'
+    }).snabbt({
+        fromRotation: [0, 0, -2*Math.PI],
+        position: [0, 0, 0],
+        easing: 'spring',
+        springConstant: 0.2,
+        springDeceleration: 0.90,
+        springMass: 10,
+    });
 }
 //执行单个周期
 function onecycle(){
@@ -273,7 +354,12 @@ function onecycle(){
         Current.f_pc=Current.F_predPC;
     }
     if(!inArray(icode.ret, [Current.D_icode,Current.E_icode,Current.M_icode])) {
-        Current.is = IS[Current.f_pc];
+        if(IS[Current.f_pc]!=undefined&&IS[Current.f_pc].length>1) {
+            Current.is = IS[Current.f_pc];
+        }
+        else{
+            Current.is="00"
+        }
     }
     New.is=Current.is;
     //if(Current.cyclenum==5) {
@@ -368,11 +454,7 @@ function onecycle(){
     else{
         Current.d_srcB= R.none;
     }
-    //New.E_valB=r[Current.e_srcB];
-    //console.log("srcB:",Current.e_srcB);
-    //console.log("New.E_valB:",New.E_valB);
     //what register should be used at the E destination?
-    //console.log("Current.D_icode:",Current.D_icode);
     if(inArray(Current.D_icode ,[icode.rrmovl,icode.irmovl,icode.opl])){
         New.E_dstE=Current.D_rB;
     }
@@ -407,10 +489,10 @@ function onecycle(){
     New.M_dstE=Current.E_dstE;
     var aluA;
     if($.inArray(Current.E_icode,[icode.rrmovl,icode.opl])!=-1){
-        aluA=Current.E_valA;
+        aluA=Current.E_valA<<0;
     }
     else if($.inArray(Current.E_icode,[icode.irmovl,icode.rmmovl,icode.mrmovl])!=-1){
-        aluA=Current.E_valC;
+        aluA=Current.E_valC<<0;
     }
     else if($.inArray(Current.E_icode,[icode.call,icode.pushl])!=-1){
         aluA=-4;
@@ -422,7 +504,7 @@ function onecycle(){
     //Select input B to ALU
     var aluB;
     if($.inArray(Current.E_icode,[icode.rmmovl,icode.mrmovl,icode.opl,icode.call,icode.pushl,icode.ret,icode.popl])!=-1){
-        aluB=Current.E_valB;
+        aluB=Current.E_valB<<0;
     }
     else if($.inArray(Current.E_icode,[icode.rrmovl,icode.irmovl])!=-1){
         aluB=0;
@@ -441,10 +523,10 @@ function onecycle(){
     //alu execute
     if(aluA!=undefined) {
         if (alufun == oplfunc.addl) {
-            New.M_valE = (aluB + aluA)&(0xffffffff);
+            New.M_valE = (aluB + aluA)<<0;
         }
         else if (alufun == oplfunc.subl) {
-            New.M_valE = (aluB - aluA)&(0xffffffff);
+            New.M_valE = (aluB - aluA)<<0;
         }
         else if (alufun == oplfunc.andl) {
             New.M_valE = aluB & aluA;
@@ -460,9 +542,9 @@ function onecycle(){
     if(set_cc){
         Current.ZF=(New.M_valE==0);
         Current.SF=(New.M_valE<0);
-        var siga=(aluA>0);
-        var sigb=(aluB>0);
-        var sige=New.M_valE>0;
+        var siga=(aluA>=0);
+        var sigb=(aluB>=0);
+        var sige=New.M_valE>=0;
         Current.OF=Current.E_ifun==oplfunc.addl&&
             (siga&&sigb&&!sige||!siga&&!sigb&&sige)||
             Current.E_ifun==oplfunc.subl&&
@@ -526,15 +608,18 @@ function onecycle(){
     if(mem_read){
         console.log("read 0x%s value=%s",mem_addr.toString(16),IS[mem_addr]);
         Current.m_valM=parseInt(lend(IS[mem_addr]),16);
+        readupdate(mem_addr,IS[mem_addr]);
         New.W_valM=Current.m_valM;
     }
     if(mem_write){
-        console.info("write 0x%s value=%s",mem_addr.toString(16),tlend(Current.M_valA.toString(16)));
-        console.log("type of mem_addr",typeof(mem_addr) );
+        //console.info("write 0x%s value=%s",mem_addr.toString(16),tlend(Current.M_valA.toString(16)));
+        //console.log("type of mem_addr",typeof(mem_addr) );
         //if(Current.cyclenum==7){
         //    console.log("asd")
         //}
         //存到memory中时应先变成小端法
+        var wval=tlend(Current.M_valA.toString(16));
+        writeupdate(mem_addr,wval);
         IS[mem_addr]=tlend(Current.M_valA.toString(16));
     }
 
@@ -577,9 +662,6 @@ function onecycle(){
         else if(Current.d_srcB==Current.W_dstE){
             New.E_valB=Current.W_valE;
         }
-    }
-    if(Current.cyclenum==5){
-        console.log("E_valA:%d E_valB:%d",New.E_valA,New.E_valB);
     }
 
     //Write Back
@@ -738,6 +820,10 @@ function update(One){
     $("#ebp").html(show32bit(r[R.ecx]));
     $("#esi").html(show32bit(r[R.esi]));
     $("#edi").html(show32bit(r[R.edi]));
+    $("#ZF").html(One.ZF==true?1:0);
+    $("#SF").html(One.SF==true?1:0);
+    $("#OF").html(One.OF==true?1:0);
+    //console.log("ZF:%s SF:%s OF:%s",One.ZF.toString(),One.SF.toString(),One.OF.toString());
 }
 function onestep(){
     onecycle();

@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-<title>とある科学の組立ライン Version 0.1</title>
+<title>Y86-simulator Version 0.1</title>
 <link href="css/main.css" rel="stylesheet" type="text/css" />
 <!--[if IE 8]><link href="css/ie8.css" rel="stylesheet" type="text/css" /><![endif]-->
 <link href='http://fonts.useso.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' type='text/css'>
@@ -57,7 +57,12 @@
 <script type="text/javascript" src="js/charts/chart1.js"></script>
 <script type="text/javascript" src="js/charts/chart2.js"></script>
 <script type="text/javascript" src="js/charts/chart3.js"></script>
-
+<script type="text/javascript" src="js/filesave/FileSaver.min.js"></script>
+	<!--animations-->
+<script src="http://code.jquery.com/jquery-2.0.3.min.js" type="text/javascript"></script>
+<script src="js/animo/animo.js" type="text/javascript"></script>
+<link href="css/animate-animo.min.css" rel="stylesheet" type="text/css">
+<script src="js/snabbt.min.js" type="text/javascript"></script>
 </head>
 
 <body>
@@ -140,6 +145,20 @@
 						</ul>
 					</div>
 					</div>
+				<br>
+				<div class="widget">
+					<div class="well body align-center">
+						<strong class="subtitle">Stack</strong>
+						<div id="Stack" class="well-white body">
+							<!--<p id="animationstest" class="muted">Fusce dapibus, tellus ac cursus commodo, tortor mauris nibh.</p>-->
+							<!--<p class="text-warning">Etiam porta sem malesuada magna mollis euismod.</p>-->
+							<!--<p class="text-error">Donec ullamcorper nulla non metus auctor fringilla.</p>-->
+							<!--<p class="text-info">Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis.</p>-->
+							<!--<p class="text-success">Duis mollis, est non commodo luctus, nisi erat porttitor ligula.</p>-->
+						</div>
+
+					</div>
+				</div>
 		        <div id="stuff">
 
 			        <!--&lt;!&ndash; Social stats &ndash;&gt;-->
@@ -259,7 +278,7 @@
 
 					<!-- With font awesome -->
 					<div class="widget">
-						<div class="navbar"><div class="navbar-inner"><h6>とある科学のY86組立ライン</h6></div></div>
+						<div class="navbar"><div class="navbar-inner"><h6>control pannel</h6></div></div>
 						<div class="well body align-center">
 							<input id="input_file" type="file" style="display:none">
 							<div class="input-append">
@@ -292,11 +311,20 @@
 
 					<!-- Buttons with Glyphicons -->
 					<div class="widget">
-						<div class="navbar"><div class="navbar-inner"><h6>Y組立ライン</h6></div></div>
+						<div class="navbar"><div class="navbar-inner"><h6>Condition code</h6></div></div>
 						<div class="well body align-center">
-							<button type="button" class="btn btn-primary"><b class="ico-fullscreen"></b> Button</button>
-							<button type="button" class="btn btn-danger"><b class="ico-fire"></b> Button</button>
-							<button type="button" class="btn btn-success"><b class="ico-star"></b> Button</button>
+							<!--<button type="button" class="btn btn-primary"><b class="ico-fullscreen"></b> Button</button>-->
+							<!--<button type="button" class="btn btn-danger"><b class="ico-fire"></b> Button</button>-->
+							<!--<button type="button" class="btn btn-success"><b class="ico-star"></b> Button</button>-->
+							<span class="label">ZF</span>
+							<span class="badge" id="ZF">0</span>
+							<span class="label label-success">SF</span>
+							<span class="badge badge-success" id="SF">0</span>
+							<span class="label label-warning" >OF</span>
+							<span class="badge badge-warning" id="OF">0</span>
+							<br>
+							<input type="text" placeholder="Debug" id="Debug" />
+							<input type="submit" class="btn btn-info" value=" set "  onclick="debug()"/>
 
 						</div>
 					</div>
@@ -601,4 +629,5 @@
 <!--<style type="text/css">-->
 	<!--<!-&#45;&#45;webkit-text-size-adjust:none;&ndash;&gt;-->
 <!--</style>-->
+<script src="js/move.min.js" text="text/javascript"></script>
 </html>
