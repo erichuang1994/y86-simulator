@@ -63,6 +63,9 @@
 <script src="js/animo/animo.js" type="text/javascript"></script>
 <link href="css/animate-animo.min.css" rel="stylesheet" type="text/css">
 <script src="js/snabbt.min.js" type="text/javascript"></script>
+<script src="js/jquery.textillate.js" type="text/javascript"></script>
+<link href="js/assets/animate.css" rel="stylesheet">
+<!--<link href="js/assets/style.css" rel="stylesheet">-->
 </head>
 
 <body>
@@ -111,9 +114,9 @@
 				        	<li><span>ecx</span></li>
 				        </ul>
 				        <ul class="Registerbody">
-				        	<li><strong id="cyclenum">null</strong></li>
-							<li><strong id="eax">0x0</strong></li>
-							<li><strong id="ecx">0x0</strong></li>
+				        	<li><strong id="cyclenum" class="content">null</strong></li>
+							<li><strong id="eax" class="content">0x0</strong></li>
+							<li><strong id="ecx" class="content">0x0</strong></li>
 				        	<!--<li><strong>1290</strong></li>-->
 				        	<!--<li><strong>554</strong></li>-->
 				        </ul>
@@ -126,9 +129,9 @@
 							<li><span>esp</span></li>
 						</ul>
 						<ul class="Registerbody">
-							<li><strong id="edx">0</strong></li>
-							<li><strong id="ebx">0x0</strong></li>
-							<li><strong id="esp">0x0</strong></li>
+							<li><strong id="edx" class="content">0</strong></li>
+							<li><strong id="ebx" class="content">0x0</strong></li>
+							<li><strong id="esp" class="content">0x0</strong></li>
 						</ul>
 					</div>
 					</br>
@@ -139,9 +142,9 @@
 							<li><span>edi</span></li>
 						</ul>
 						<ul class="Registerbody">
-							<li><strong id="ebp">0</strong></li>
-							<li><strong id="esi">0x0</strong></li>
-							<li><strong id="edi">0x0</strong></li>
+							<li><strong id="ebp" class="content">0</strong></li>
+							<li><strong id="esi" class="content">0x0</strong></li>
+							<li><strong id="edi" class="content">0x0</strong></li>
 						</ul>
 					</div>
 					</div>
@@ -278,7 +281,7 @@
 
 					<!-- With font awesome -->
 					<div class="widget">
-						<div class="navbar"><div class="navbar-inner"><h6>control pannel</h6></div></div>
+						<div class="navbar"><div class="navbar-inner"><h6 class="tlt">control pannel</h6></div></div>
 						<div class="well body align-center">
 							<input id="input_file" type="file" style="display:none">
 							<div class="input-append">
@@ -311,7 +314,7 @@
 
 					<!-- Buttons with Glyphicons -->
 					<div class="widget">
-						<div class="navbar"><div class="navbar-inner"><h6>Condition code</h6></div></div>
+						<div class="navbar"><div class="navbar-inner"><h6 class="tlt">Condition code</h6></div></div>
 						<div class="well body align-center">
 							<!--<button type="button" class="btn btn-primary"><b class="ico-fullscreen"></b> Button</button>-->
 							<!--<button type="button" class="btn btn-danger"><b class="ico-fire"></b> Button</button>-->
@@ -354,12 +357,12 @@
 								</ul>
 								<ul class="body">
 									<li><strong>/</strong></li>
-									<li><strong id="W_icode">0x0</strong></li>
+									<li><strong id="W_icode" class="content">0x0</strong></li>
 									<li><strong >/</strong></li>
-									<li><strong id="W_valE">0x00000000</strong></li>
-									<li><strong id="W_valM">0x00000000</strong></li>
-									<li><strong id="W_dstE">0x0</strong></li>
-									<li><strong id="W_dstM">0x0</strong></li>
+									<li><strong id="W_valE" class="content">0x00000000</strong></li>
+									<li><strong id="W_valM" class="content">0x00000000</strong></li>
+									<li><strong id="W_dstE" class="content">0x0</strong></li>
+									<li><strong id="W_dstM" class="content">0x0</strong></li>
 									<li><strong >/</strong></li>
 									<li><strong >/</strong></li>
 									<li><strong >/</strong></li>
@@ -380,12 +383,12 @@
 								</ul>
 								<ul class="body">
 									<li><strong>／</strong></li>
-									<li><strong id="M_icode">0x0</strong></li>
-									<li><strong id="M_Bch">null</strong></li>
-									<li><strong id="M_valE">0x00000000</strong></li>
-									<li><strong id="M_valA">0x00000000</strong></li>
-									<li><strong id="M_dstE">0x0</strong></li>
-									<li><strong id="M_dstM">0x0</strong></li>
+									<li><strong id="M_icode" class="content">0x0</strong></li>
+									<li><strong id="M_Bch" class="content">null</strong></li>
+									<li><strong id="M_valE" class="content">0x00000000</strong></li>
+									<li><strong id="M_valA" class="content">0x00000000</strong></li>
+									<li><strong id="M_dstE" class="content">0x0</strong></li>
+									<li><strong id="M_dstM" class="content">0x0</strong></li>
 									<li><strong>/</strong></li>
 									<li><strong>/</strong></li>
 									<li><strong>/</strong></li>
@@ -406,15 +409,15 @@
 								</ul>
 								<ul class="body">
 									<li><strong>/</strong></li>
-									<li><strong id="E_icode">0x0</strong></li>
-									<li><strong id="E_ifun">0x0</strong></li>
-									<li><strong id="E_valC">0x00000000</strong></li>
-									<li><strong id="E_valA">0x00000000</strong></li>
-									<li><strong id="E_valB">0x00000000</strong></li>
-									<li><strong id="E_dstE">0x8</strong></li>
-									<li><strong id="E_dstM">0x8</strong></li>
-									<li><strong id="E_srcA">0x8</strong></li>
-									<li><strong id="E_srcM">0x8</strong></li>
+									<li><strong id="E_icode" class="content">0x0</strong></li>
+									<li><strong id="E_ifun" class="content">0x0</strong></li>
+									<li><strong id="E_valC" class="content">0x00000000</strong></li>
+									<li><strong id="E_valA" class="content">0x00000000</strong></li>
+									<li><strong id="E_valB" class="content">0x00000000</strong></li>
+									<li><strong id="E_dstE" class="content">0x8</strong></li>
+									<li><strong id="E_dstM" class="content">0x8</strong></li>
+									<li><strong id="E_srcA" class="content">0x8</strong></li>
+									<li><strong id="E_srcM" class="content">0x8</strong></li>
 								</ul>
 							</div>
 							<div class="general-stats widget">
@@ -432,12 +435,12 @@
 								</ul>
 								<ul class="body">
 									<li><strong>/</strong></li>
-									<li><strong id="D_icode">0x0</strong></li>
-									<li><strong id="D_ifun">0x0</strong></li>
-									<li><strong id="D_rA">0x8</strong></li>
-									<li><strong id="D_rB">0x8</strong></li>
-									<li><strong id="D_valC">0x00000000</strong></li>
-									<li><strong id="D_valP">0x00000000</strong></li>
+									<li><strong id="D_icode" class="content">0x0</strong></li>
+									<li><strong id="D_ifun" class="content">0x0</strong></li>
+									<li><strong id="D_rA" class="content">0x8</strong></li>
+									<li><strong id="D_rB" class="content">0x8</strong></li>
+									<li><strong id="D_valC" class="content">0x00000000</strong></li>
+									<li><strong id="D_valP" class="content">0x00000000</strong></li>
 									<li><strong >/</strong></li>
 									<li><strong >/</strong></li>
 									<li><strong >/</strong></li>
@@ -460,7 +463,7 @@
 									<li><strong>/</strong></li>
 									<li><strong>/</strong></li>
 									<li><strong>/</strong></li>
-									<li><strong id="F_predPC">0x00000000</strong></li>
+									<li><strong id="F_predPC" class="content">0x00000000</strong></li>
 									<li><strong>/</strong></li>
 									<li><strong>/</strong></li>
 									<li><strong>/</strong></li>
@@ -475,7 +478,7 @@
 					<div class="span4">
 						<div class="widget">
                             <div class="well body align-center">
-								<div class="navbar"><div class="navbar-inner"><h6>Assembly Code</h6></div></div>
+								<div class="navbar"><div class="navbar-inner"><h6 class="tlt">animably Code</h6></div></div>
 								<div class="well body">
 
 									<pre class="pre-scrollable prettyprint linenums" id="code">
@@ -517,16 +520,29 @@
 </body>
 <script src="y86.js">
 </script>
+
+<!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>-->
+<script src="js/assets/jquery.fittext.js"></script>
+<script src="js/assets/jquery.lettering.js"></script>
+<script src="http://yandex.st/highlightjs/7.3/highlight.min.js"></script>
+<!--<script src="jquery.textillate.js"></script>-->
 <script>
+	$(function () {
+		$('.tlt').textillate({ in: { effect: 'rollIn' } });
+		$('.content').textillate({ in: { effect: 'rollIn' }});
+	})
 	var InputFile = document.getElementById('input_file');
 	var IsaArray;
-	IsaArray = [];
 	var DesArray;
-	DesArray = [];
-	var IS={};
+	var IS;
 	var Hasload=false;
+	var backupIS;
 	//事件监听
 	input_file.addEventListener('change', function (e) {
+		IS={};
+		backupIS={};
+		DesArray = [];
+		IsaArray = [];
 		/*
 		 e.currentTarget代表触发此事件的对象即input_file
 		 为什么不直接使用函数外面的input_file呢

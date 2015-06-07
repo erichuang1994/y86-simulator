@@ -303,18 +303,19 @@ function writeupdate(mem_addr,val){
         var str=String.format(htmltext,mem_addr.toString(),hex3bit(mem_addr),val);
         console.log("insert:",str);
         $("#Stack").prepend(str);
-        $(par).snabbt({
-            position: [0, 0, 0],
-            rotation: [0, 0, 2*Math.PI],
-            easing: 'spring',
-            springConstant: 0.3,
-            springDeceleration: 0.8,
-        }).snabbt({
-            position: [0, 0, 0],
-            easing: 'spring',
-            springConstant: 0.3,
-            springDeceleration: 0.8,
-        });
+        $(par).textillate({ in: { effect: 'rollIn' } });
+        //$(par).snabbt({
+        //    position: [0, 0, 0],
+        //    rotation: [0, 0, 2*Math.PI],
+        //    easing: 'spring',
+        //    springConstant: 0.3,
+        //    springDeceleration: 0.8,
+        //}).snabbt({
+        //    position: [0, 0, 0],
+        //    easing: 'spring',
+        //    springConstant: 0.3,
+        //    springDeceleration: 0.8,
+        //});
         //$(par).html(val);
     }
 }
@@ -811,7 +812,9 @@ function update(One){
     $("#W_valM").html(show32bit(One.W_valM));
     $("#W_dstE").html(hex(One.W_dstE));
     $("#W_dstM").html(hex(One.W_dstM));
+    $('#cyclenum').textillate('out');
     $("#cyclenum").html(One.cyclenum);
+    $('#cyclenum').textillate({ in: { effect: 'rollIn' } });
     $("#eax").html(show32bit(r[R.eax]));
     $("#ecx").html(show32bit(r[R.ecx]));
     $("#edx").html(show32bit(r[R.edx]));
