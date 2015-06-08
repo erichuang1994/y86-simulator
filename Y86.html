@@ -60,7 +60,8 @@
 <script type="text/javascript" src="js/charts/chart3.js"></script>
 <script type="text/javascript" src="js/filesave/FileSaver.min.js"></script>
 	<!--animations-->
-<script src="http://code.jquery.com/jquery-2.0.3.min.js" type="text/javascript"></script>
+<!--<script src="http://code.jquery.com/jquery-2.0.3.min.js" type="text/javascript"></script>-->
+<script src="js/jquery-2.0.3.min.js" type="text/javascript"></script>
 <script src="js/animo/animo.js" type="text/javascript"></script>
 <link href="css/animate-animo.min.css" rel="stylesheet" type="text/css">
 <script src="js/snabbt.min.js" type="text/javascript"></script>
@@ -69,7 +70,7 @@
 <!--<link href="js/assets/style.css" rel="stylesheet">-->
 </head>
 
-<body>
+<body onload="prettyPrint()">
 
 	<!-- Fixed top -->
 	<div id="top">
@@ -104,7 +105,7 @@
 		        <ul class="tabs-nav two-items">
                 <!--<ul class="tabs-nav one-items">-->
 		            <li><a href="#general" title=""><i class="icon-reorder"></i></a></li>
-		            <li><a href="#stuff" title=""><i class="icon-cogs"></i></a></li>
+		            <li><a href="Y86-Assembler.html" title=""><i class="icon-cogs"></i></a></li>
 		        </ul>
 
 		        <div id="general">
@@ -478,7 +479,7 @@
 		    		</div>
 					<div class="span4">
 						<div class="widget">
-                            <div class="well body align-center">
+                            <div class="well body align-left">
 								<div class="navbar"><div class="navbar-inner"><h6 class="tlt">animably Code</h6></div></div>
 								<div class="well body">
 
@@ -528,7 +529,7 @@
 <script src="js/highlight.min.js"></script>
 <!--<script src="jquery.textillate.js"></script>-->
 <script>
-	prettyPrint();
+//	prettyPrint();
 	$(function () {
 		$('.tlt').textillate({ in: { effect: 'rollIn' } });
 		$('.content').textillate({ in: { effect: 'rollIn' }});

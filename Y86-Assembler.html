@@ -1,10 +1,472 @@
 <!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Y86-simulator Version 0.1</title>
+    <link href="css/main.css" rel="stylesheet" type="text/css" />
+    <!--[if IE 8]><link href="css/ie8.css" rel="stylesheet" type="text/css" /><![endif]-->
+    <!--加载有点慢下载到本地加载-->
+    <!--<link href='http://fonts.useso.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' type='text/css'>-->
+    <link href='css/family=Open+Sans300,400,600,700.css' rel='stylesheet' type='text/css'>
+    <!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>-->
+    <script src="http://cdn.bootcss.com/jquery/1.7.2/jquery.min.js"></script>
+    <script type="text/javascript" src="http://cdn.bootcss.com/jqueryui/1.9.2/jquery-ui.min.js"></script>
+    <!--<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDY0kkJiTPVd2U7aTOAwhc9ySH6oHxOIYM&amp;sensor=false"></script>-->
 
+    <script type="text/javascript" src="js/plugins/charts/excanvas.min.js"></script>
+    <script type="text/javascript" src="js/plugins/charts/jquery.flot.js"></script>
+    <script type="text/javascript" src="js/plugins/charts/jquery.flot.resize.js"></script>
+    <script type="text/javascript" src="js/plugins/charts/jquery.sparkline.min.js"></script>
+
+    <script type="text/javascript" src="js/plugins/ui/jquery.easytabs.min.js"></script>
+    <script type="text/javascript" src="js/plugins/ui/jquery.collapsible.min.js"></script>
+    <script type="text/javascript" src="js/plugins/ui/jquery.mousewheel.js"></script>
+    <script type="text/javascript" src="js/plugins/ui/prettify.js"></script>
+    <script type="text/javascript" src="js/plugins/ui/jquery.bootbox.min.js"></script>
+    <script type="text/javascript" src="js/plugins/ui/jquery.colorpicker.js"></script>
+    <script type="text/javascript" src="js/plugins/ui/jquery.timepicker.min.js"></script>
+    <script type="text/javascript" src="js/plugins/ui/jquery.jgrowl.js"></script>
+    <script type="text/javascript" src="js/plugins/ui/jquery.fancybox.js"></script>
+    <script type="text/javascript" src="js/plugins/ui/jquery.fullcalendar.min.js"></script>
+    <script type="text/javascript" src="js/plugins/ui/jquery.elfinder.js"></script>
+
+    <script type="text/javascript" src="js/plugins/uploader/plupload.js"></script>
+    <script type="text/javascript" src="js/plugins/uploader/plupload.html4.js"></script>
+    <script type="text/javascript" src="js/plugins/uploader/plupload.html5.js"></script>
+    <script type="text/javascript" src="js/plugins/uploader/jquery.plupload.queue.js"></script>
+
+    <script type="text/javascript" src="js/plugins/forms/jquery.uniform.min.js"></script>
+    <script type="text/javascript" src="js/plugins/forms/jquery.autosize.js"></script>
+    <script type="text/javascript" src="js/plugins/forms/jquery.inputlimiter.min.js"></script>
+    <script type="text/javascript" src="js/plugins/forms/jquery.tagsinput.min.js"></script>
+    <script type="text/javascript" src="js/plugins/forms/jquery.inputmask.js"></script>
+    <script type="text/javascript" src="js/plugins/forms/jquery.select2.min.js"></script>
+    <script type="text/javascript" src="js/plugins/forms/jquery.listbox.js"></script>
+    <script type="text/javascript" src="js/plugins/forms/jquery.validation.js"></script>
+    <script type="text/javascript" src="js/plugins/forms/jquery.validationEngine-en.js"></script>
+    <script type="text/javascript" src="js/plugins/forms/jquery.form.wizard.js"></script>
+    <script type="text/javascript" src="js/plugins/forms/jquery.form.js"></script>
+
+    <script type="text/javascript" src="js/plugins/tables/jquery.dataTables.min.js"></script>
+
+    <script type="text/javascript" src="js/files/bootstrap.min.js"></script>
+
+    <script type="text/javascript" src="js/files/functions.js"></script>
+
+    <script type="text/javascript" src="js/charts/graph.js"></script>
+    <script type="text/javascript" src="js/charts/chart1.js"></script>
+    <script type="text/javascript" src="js/charts/chart2.js"></script>
+    <script type="text/javascript" src="js/charts/chart3.js"></script>
+    <script type="text/javascript" src="js/filesave/FileSaver.min.js"></script>
+    <!--animations-->
+    <!--<script src="http://code.jquery.com/jquery-2.0.3.min.js" type="text/javascript"></script>-->
+    <script src="js/jquery-2.0.3.min.js" type="text/javascript"></script>
+    <script src="js/animo/animo.js" type="text/javascript"></script>
+    <link href="css/animate-animo.min.css" rel="stylesheet" type="text/css">
+    <script src="js/snabbt.min.js" type="text/javascript"></script>
+    <script src="js/jquery.textillate.js" type="text/javascript"></script>
+    <link href="js/assets/animate.css" rel="stylesheet">
+</head>
+<body >
+<div id="top">
+    <div class="fixed">
+        <a href="index.html" title="" class="logo"><img src="img/logo.png" alt="" /></a>
+        <ul class="top-menu">
+            <li><a class="fullview"></a></li>
+            <li><a class="showmenu"></a></li>
+            <li><a href="#" title="" class="messages"><i class="new-message"></i></a></li>
+            <li class="dropdown">
+                <a class="user-menu" data-toggle="dropdown"><img src="img/paojie.jpg" alt="" /><span>みさかみこと<b class="caret"></b></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#" title=""><i class="icon-user"></i>Profile</a></li>
+                    <li><a href="#" title=""><i class="icon-inbox"></i>Messages<span class="badge badge-info">9</span></a></li>
+                    <li><a href="#" title=""><i class="icon-cog"></i>Settings</a></li>
+                    <li><a href="#" title=""><i class="icon-remove"></i>Logout</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
+<!-- /fixed top -->
+
+
+<!-- Content container -->
+<div id="container">
+
+    <!-- Sidebar -->
+    <div id="sidebar">
+
+        <div class="sidebar-tabs">
+            <ul class="tabs-nav two-items">
+                <!--<ul class="tabs-nav one-items">-->
+                <li><a href="#general" title=""><i class="icon-reorder"></i></a></li>
+                <li><a href="Y86.html" title=""><i class="icon-cogs"></i></a></li>
+            </ul>
+
+            <div id="general">
+                <div class="general-stats widget">
+                    <ul class="Register" >
+                        <li><span >当前周期数</span></li>
+                        <li><span>eax</span></li>
+                        <li><span>ecx</span></li>
+                    </ul>
+                    <ul class="Registerbody">
+                        <li><strong id="cyclenum" class="content">null</strong></li>
+                        <li><strong id="eax" class="content">0x0</strong></li>
+                        <li><strong id="ecx" class="content">0x0</strong></li>
+                        <!--<li><strong>1290</strong></li>-->
+                        <!--<li><strong>554</strong></li>-->
+                    </ul>
+                </div>
+                </br>
+                <div class="general-stats widget">
+                    <ul class="Register" >
+                        <li><span >edx</span></li>
+                        <li><span>ebx</span></li>
+                        <li><span>esp</span></li>
+                    </ul>
+                    <ul class="Registerbody">
+                        <li><strong id="edx" class="content">0</strong></li>
+                        <li><strong id="ebx" class="content">0x0</strong></li>
+                        <li><strong id="esp" class="content">0x0</strong></li>
+                    </ul>
+                </div>
+                </br>
+                <div class="general-stats widget">
+                    <ul class="Register" >
+                        <li><span >ebp</span></li>
+                        <li><span>esi</span></li>
+                        <li><span>edi</span></li>
+                    </ul>
+                    <ul class="Registerbody">
+                        <li><strong id="ebp" class="content">0</strong></li>
+                        <li><strong id="esi" class="content">0x0</strong></li>
+                        <li><strong id="edi" class="content">0x0</strong></li>
+                    </ul>
+                </div>
+            </div>
+            <br>
+            <div class="widget">
+                <div class="well body align-center">
+                    <strong class="subtitle">Stack</strong>
+                    <div id="Stack" class="well-white body">
+                        <!--<p id="animationstest" class="muted">Fusce dapibus, tellus ac cursus commodo, tortor mauris nibh.</p>-->
+                        <!--<p class="text-warning">Etiam porta sem malesuada magna mollis euismod.</p>-->
+                        <!--<p class="text-error">Donec ullamcorper nulla non metus auctor fringilla.</p>-->
+                        <!--<p class="text-info">Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis.</p>-->
+                        <!--<p class="text-success">Duis mollis, est non commodo luctus, nisi erat porttitor ligula.</p>-->
+                    </div>
+
+                </div>
+            </div>
+            <div id="stuff">
+
+                <!--&lt;!&ndash; Social stats &ndash;&gt;-->
+                <!--<div class="widget">-->
+                <!--<h6 class="widget-name"><i class="icon-twitter"></i>Social statistics</h6>-->
+                <!--<ul class="social-stats">-->
+                <!--<li>-->
+                <!--<a href="" title="" class="orange-square"><i class="icon-rss"></i></a>-->
+                <!--<div>-->
+                <!--<h4>1,286</h4>-->
+                <!--<span>total feed subscribers</span>-->
+                <!--</div>-->
+                <!--</li>-->
+                <!--<li>-->
+                <!--<a href="" title="" class="blue-square"><i class="icon-twitter"></i></a>-->
+                <!--<div>-->
+                <!--<h4>12,683</h4>-->
+                <!--<span>total twitter followers</span>-->
+                <!--</div>-->
+                <!--</li>-->
+                <!--<li>-->
+                <!--<a href="" title="" class="dark-blue-square"><i class="icon-facebook"></i></a>-->
+                <!--<div>-->
+                <!--<h4>530,893</h4>-->
+                <!--<span>total facebook likes</span>-->
+                <!--</div>-->
+                <!--</li>-->
+                <!--</ul>-->
+                <!--</div>-->
+                <!--&lt;!&ndash; /social stats &ndash;&gt;-->
+
+
+                <!--&lt;!&ndash; Datepicker &ndash;&gt;-->
+                <!--<div class="widget">-->
+                <!--<h6 class="widget-name"><i class="icon-calendar"></i>Datepicker</h6>-->
+                <!--<div class="inlinepicker datepicker-liquid"></div>-->
+                <!--</div>-->
+                <!--&lt;!&ndash; /datepicker &ndash;&gt;-->
+
+
+                <!--&lt;!&ndash; Dates range &ndash;&gt;-->
+                <!--<ul class="widget dates-range">-->
+                <!--<li><input type="text" id="fromDate" name="from" placeholder="From" /></li>-->
+                <!--<li class="sep">-</li>-->
+                <!--<li><input type="text" id="toDate" name="to" placeholder="To" /></li>-->
+                <!--</ul>-->
+                <!--&lt;!&ndash; /dates range &ndash;&gt;-->
+
+
+                <!--&lt;!&ndash; Color picker &ndash;&gt;-->
+                <!--<div class="widget input-append color" data-color="rgb(255, 146, 180)" data-color-format="rgb" id="cp3">-->
+                <!--<input type="text" value="" readonly >-->
+                <!--<span class="add-on"><i style="background-color: rgb(255, 146, 180)"></i></span>-->
+                <!--</div>-->
+                <!--&lt;!&ndash; /color picker &ndash;&gt;-->
+
+
+                <!--&lt;!&ndash; Time picker range &ndash;&gt;-->
+                <!--<ul class="widget dates-range">-->
+                <!--<li><input id="timeformatExample1" type="text" placeholder="Start" /></li>-->
+                <!--<li class="sep">-</li>-->
+                <!--<li><input id="timeformatExample2" type="text" placeholder="End" /></li>-->
+                <!--</ul>-->
+                <!--&lt;!&ndash; /time picker range &ndash;&gt;-->
+
+
+                <!--&lt;!&ndash; Gallery thumbs &ndash;&gt;-->
+                <!--<div class="widget">-->
+                <!--<h6 class="widget-name"><i class="icon-picture"></i>Gallery thumbs</h6>-->
+                <!--<div class="row-fluid thumbs">-->
+                <!--<div class="span6">-->
+                <!--<a href="img/demo/big.jpg" class="lightbox"><img src="http://placehold.it/580x380" alt="" /></a>-->
+                <!--<a href="img/demo/big.jpg" class="lightbox"><img src="http://placehold.it/580x380" alt="" /></a>-->
+                <!--<a href="img/demo/big.jpg" class="lightbox"><img src="http://placehold.it/580x380" alt="" /></a>-->
+                <!--<a href="img/demo/big.jpg" class="lightbox"><img src="http://placehold.it/580x380" alt="" /></a>-->
+                <!--</div>-->
+                <!--<div class="span6">-->
+                <!--<a href="img/demo/big.jpg" class="lightbox"><img src="http://placehold.it/580x380" alt="" /></a>-->
+                <!--<a href="img/demo/big.jpg" class="lightbox"><img src="http://placehold.it/580x380" alt="" /></a>-->
+                <!--<a href="img/demo/big.jpg" class="lightbox"><img src="http://placehold.it/580x380" alt="" /></a>-->
+                <!--<a href="img/demo/big.jpg" class="lightbox"><img src="http://placehold.it/580x380" alt="" /></a>-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--&lt;!&ndash; /gallery thumbs &ndash;&gt;-->
+
+                <!--&lt;!&ndash; Action buttons &ndash;&gt;-->
+                <!--<div class="widget">-->
+                <!--<h6 class="widget-name"><i class="icon-search"></i>Action buttons</h6>-->
+                <!--<button class="btn btn-block btn-danger">Action button</button>-->
+                <!--<button class="btn btn-block btn-info">Action button</button>-->
+                <!--<button class="btn btn-block btn-success">Action button</button>-->
+                <!--</div>-->
+                <!--&lt;!&ndash; /action buttons &ndash;&gt;-->
+
+                <!--&lt;!&ndash; Tags input &ndash;&gt;-->
+                <!--<div class="widget">-->
+                <!--<h6 class="widget-name"><i class="icon-search"></i>Tags input</h6>-->
+                <!--<input type="text" id="tags1" class="tags" value="these,are,sample,tags" />-->
+                <!--</div>-->
+                <!--&lt;!&ndash; /tags input &ndash;&gt;-->
+
+            </div>
+            <!--注释结束-->
+        </div>
+    </div>
+    <!-- /sidebar -->
+
+
+    <!-- Content -->
+    <div id="content">
+        <!-- Earnings stats widgets -->
+        <!-- Buttons with icons -->
+        <div class="row-fluid">
+
+            <div class="span5">
+
+                <!-- With font awesome -->
+                <div class="widget">
+                    <div class="navbar"><div class="navbar-inner"><h6 class="tlt">control pannel</h6></div></div>
+                    <div class="well body align-center">
+                        <input id="input_file" type="file" style="display:none">
+                        <div class="input-append">
+                            <input id="photoCover" class="input-middle" type="text">
+                            <!--<button class="btn" onclick="$('input[id=input_file]').click();">Load</button>-->
+                            <button type="button" class="btn btn-primary" onclick="$('input[id=input_file]').click();"><b class="ico-upload"></b> Load</button>
+                            <button type="button" class="btn btn-success" onclick="save()"><b class="icon-download"></b>save</button>
+                            <button type="button" class="btn btn-warning" onclick="reset()"><b class="ico-refresh"></b> Reset</button>
+                        </div>
+                        <button type="button" class="btn btn-info" onclick="Complier()" id="run"><b class="ico-play"></b>Complier</button>
+                        <!--<button type="button" class="btn btn-primary" onclick="pause()"><b class="ico-pause"></b> Pause</button>-->
+                        <!--<button type="button" class="btn btn-danger" onclick="step()"><b class="ico-step-forward"></b> Step</button>-->
+                        <!--&lt;!&ndash;<button type="button" class="btn btn-success" onclick="moha()"><b class="icon-star"></b> 1Hz</button>&ndash;&gt;-->
+                        <!--<select  id="hz" name="select" class="styled">-->
+                            <!--<option value="0">跑得比谁都快！</option>-->
+                            <!--<option value="1">1Hz</option>-->
+                            <!--<option value="2">2Hz</option>-->
+                            <!--<option value="4">4Hz</option>-->
+                            <!--<option value="8">和西方记者一样快</option>-->
+                        <!--</select>-->
+
+                    </div>
+
+                </div>
+                <!-- /with font awesome -->
+
+            </div>
+
+            <!--<div class="span5">-->
+
+                <!--&lt;!&ndash; Buttons with Glyphicons &ndash;&gt;-->
+                <!--<div class="widget">-->
+                    <!--<div class="navbar"><div class="navbar-inner"><h6 class="tlt">Condition code</h6></div></div>-->
+                    <!--<div class="well body align-center">-->
+                        <!--&lt;!&ndash;<button type="button" class="btn btn-primary"><b class="ico-fullscreen"></b> Button</button>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<button type="button" class="btn btn-danger"><b class="ico-fire"></b> Button</button>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<button type="button" class="btn btn-success"><b class="ico-star"></b> Button</button>&ndash;&gt;-->
+                        <!--<span class="label">ZF</span>-->
+                        <!--<span class="badge" id="ZF">0</span>-->
+                        <!--<span class="label label-success">SF</span>-->
+                        <!--<span class="badge badge-success" id="SF">0</span>-->
+                        <!--<span class="label label-warning" >OF</span>-->
+                        <!--<span class="badge badge-warning" id="OF">0</span>-->
+                        <!--<br>-->
+                        <!--<input type="text" placeholder="Debug" id="Debug" />-->
+                        <!--<input type="submit" class="btn btn-info" value=" set "  onclick="debug()"/>-->
+
+                    <!--</div>-->
+                <!--</div>-->
+                <!--&lt;!&ndash; /buttons with glyphicons &ndash;&gt;-->
+
+            <!--</div>-->
+
+        </div>
+        <!-- /buttons with icons -->
+        <div class="row-fluid">
+            <!--</div>-->
+            <div class="span6">
+                <div class="widget">
+                    <div class="well body align-left">
+                        <div class="navbar"><div class="navbar-inner"><h6 class="tlt">Machine Code</h6></div></div>
+                        <div class="well body">
+
+									<pre class="pre-scrollable prettyprint linenums" id="mcode">
+									</pre>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="span6">
+                <div class="widget">
+                    <div class="well body align-left">
+                        <div class="navbar"><div class="navbar-inner"><h6 class="tlt">animably Code</h6></div></div>
+                        <div class="well body">
+
+									<pre class="pre-scrollable prettyprint linenums lang-llvm" id="code">
+									</pre>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /with titles -->
+
+        <!--</div>-->
+        <!-- /media datatable -->
+
+        <!--</div>-->
+        <!-- /content wrapper -->
+
+    </div>
+    <!-- /content -->
+
+</div>
+<!-- /content container -->
+
+
+<!--&lt;!&ndash; Footer &ndash;&gt;-->
+<!--<div id="footer">-->
+<!--<div class="copyrights">Copyright &copy; 2014.Company name All rights reserved.<a target="_blank" href="https://github.com/erichuang1994/y86-simulator">&#x7F51;&#x9875;&#x6A21;&#x677F;</a></div>-->
+<!--<ul class="footer-links">-->
+<!--<li><a href="" title=""><i class="icon-cogs"></i>Contact admin</a></li>-->
+<!--<li><a href="" title=""><i class="icon-screenshot"></i>Report bug</a></li>-->
+<!--</ul>-->
+<!--</div>-->
+<!--&lt;!&ndash; /footer &ndash;&gt;-->
+
+<!--<div style="display:none"><script src='http://v7.cnzz.com/stat.php?id=155540&web_id=155540' language='JavaScript' charset='gb2312'></script></div>-->
 </body>
+<script src="js/assets/jquery.fittext.js"></script>
+<script src="js/assets/jquery.lettering.js"></script>
+<script src="js/highlight.min.js"></script>
+<!--<script src="jquery.textillate.js"></script>-->
+<script>
+//    prettyPrint();
+$(function () {
+    var str="import y86\nprint\"Life is short,I use Python!\"";
+    $("#code").append(str);
+    $("#mcode").append(str);
+    prettyPrint()
+    $('.tlt').textillate({ in: { effect: 'rollIn' } });
+    $('.content').textillate({ in: { effect: 'rollIn' }});
+})
+    var InputFile = document.getElementById('input_file');
+    var input;
+    var oriresult;
+    //事件监听
+    input_file.addEventListener('change', function (e) {
+        /*
+         e.currentTarget代表触发此事件的对象即input_file
+         为什么不直接使用函数外面的input_file呢
+         因为直接使用函数外面的input_file就代表此函数依赖于外部变量了
+         一个函数应该越独立越好，减少依赖
+         */
+        $('#photoCover').val($(this).val());
+        var input_file = e.currentTarget;
+        cyclecounter=0;
+        /*
+         选择的文件会存放在input的files数组里
+         HTML5允许选择多个文件
+         files[0]即为选择的第一个文件
+         */
+        var file = input_file.files[0];
+        readBlobAsText(file, function (err, result) {
+            if (err) {
+                alert(err.name + '\n' + err.message);
+                return;
+            }
+//            console.log(result);
+            oriresult=result;
+            input=result;
+            $("#code").empty();
+            $("#mcode").empty();
+            var str="import y86\nprint\"Life is short,I use Python!\"";
+            $("#mcode").append(str);
+            $("#code").append(result);
+            prettyPrint();
+            assembler(input);
+        });
+    });
+    /*
+     读取Blob为Text
+     参数说明
+     blob: 要读取的Blob对象
+     callback: 读取完成后的回调函数
+     回调参数
+     err: 若读取成功此参数为null，若读取失败此参数为Error对象
+     result: 若读取成功此参数为读取结果，若读取失败此参数为null
+     */
+    function readBlobAsText(blob, callback) {
+        var fr = new FileReader();
+        fr.onload = function (e) {
+            var fr = e.currentTarget;
+            if (typeof callback === 'function') {
+                callback.call(fr, null, fr.result);
+            }
+        };
+        fr.onerror = function (e) {
+            var fr = e.currentTarget;
+            if (typeof callback === 'function') {
+                callback.call(fr, fr.error, null);
+            }
+        };
+        fr.readAsText(blob);
+    }
+</script>
+<script type="text/javascript" src="js/Y86-Assembler.js"></script>
 </html>
