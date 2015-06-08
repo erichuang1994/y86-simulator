@@ -11,7 +11,7 @@ var FONE=0;
 var r=[];
 var stack={};
 var M={};
-
+var resetkey=true;
 //当前周期数目
 var curcycle;
 //Register类
@@ -164,6 +164,7 @@ function run(){
     //    if(!onecycle())
     //        break;
     //}
+    resetkey=false;
     if(Hasload==false){
         alert("跑也要按照基本法呀，中国有句古话，叫有代码才能跑！");
         $('input[id=input_file]').click();
@@ -181,6 +182,7 @@ function moha(){
     //    if(!onecycle())
     //        break;
     //}
+    resetkey=false;
     Pause=false;
     if(Hasload==false){
         alert("跑也要按照基本法呀，中国有句古话，叫有代码才能跑！");
@@ -222,12 +224,30 @@ function step(){
         update(Current);
     }
 }
-
+$('.content').on('outAnimationEnd.tlt', function () {
+    reinit();
+});
 //reset
 function reset(){
+    if(resetkey===true) {
+        resetkey=false;
+        $('.content').textillate('out');
+    }else {
+        init();
+        IS=$.extend({},backupIS);
+        Current=CycleStore.createNew();
+        update(Current);
+        //$('.content').textillate('in');
+        savestr=""
+        $("#Stack").empty();
+    }
+}
+function reinit(){
     init();
+    IS=$.extend({},backupIS);
     Current=CycleStore.createNew();
     update(Current);
+    //$('.content').textillate('in');
     savestr=""
     $("#Stack").empty();
 }
@@ -297,13 +317,13 @@ function writeupdate(mem_addr,val){
             springDeceleration: 0.90,
             springMass: 10,
         });
-        $(par).html(val);
+        $(par).html("0x"+mem_addr.toString()+":0x"+val);
     }
     else{
         var str=String.format(htmltext,mem_addr.toString(),hex3bit(mem_addr),val);
         console.log("insert:",str);
         $("#Stack").prepend(str);
-        $(par).textillate({ in: { effect: 'rollIn' } });
+        $(par).textillate({ in: { effect: 'rollIn',sync: true, } });
         //$(par).snabbt({
         //    position: [0, 0, 0],
         //    rotation: [0, 0, 2*Math.PI],
@@ -523,18 +543,34 @@ function onecycle(){
     New.M_valA=Current.E_valA;
     //alu execute
     if(aluA!=undefined) {
-        if (alufun == oplfunc.addl) {
-            New.M_valE = (aluB + aluA)<<0;
+        switch(alufun){
+            case oplfunc.addl:
+                New.M_valE = (aluB + aluA)<<0;
+                break;
+            case oplfunc.subl:
+                New.M_valE = (aluB - aluA)<<0;
+                break;
+            case oplfunc.andl:
+                New.M_valE = aluB & aluA;
+                break;
+            case oplfunc.xorl:
+                New.M_valE = aluB ^ aluA;
+                break;
+            default :
+                break;
         }
-        else if (alufun == oplfunc.subl) {
-            New.M_valE = (aluB - aluA)<<0;
-        }
-        else if (alufun == oplfunc.andl) {
-            New.M_valE = aluB & aluA;
-        }
-        else if (alufun == oplfunc.xorl) {
-            New.M_valE = aluB ^ aluA;
-        }
+        //if (alufun == oplfunc.addl) {
+        //    New.M_valE = (aluB + aluA)<<0;
+        //}
+        //else if (alufun == oplfunc.subl) {
+        //    New.M_valE = (aluB - aluA)<<0;
+        //}
+        //else if (alufun == oplfunc.andl) {
+        //    New.M_valE = aluB & aluA;
+        //}
+        //else if (alufun == oplfunc.xorl) {
+        //    New.M_valE = aluB ^ aluA;
+        //}
     }
     //console.log("alufun=",alufun);
     Current.e_valE=New.M_valE;
@@ -557,27 +593,52 @@ function onecycle(){
     New.OF=Current.OF;
     //Set M_Bch
     if(Current.E_icode==icode.jxx){
-        if(Current.E_ifun==jfunc.jle){
-            Current.e_Bch=(Current.SF^Current.OF)|Current.ZF;
+        switch(Current.E_ifun){
+            case jfunc.jle:
+                Current.e_Bch=(Current.SF^Current.OF)|Current.ZF;
+                break;
+            case jfunc.je:
+                Current.e_Bch=Current.ZF;
+                break;
+            case jfunc.jl:
+                Current.e_Bch=Current.SF^Current.OF;
+                break;
+            case jfunc.jmp:
+                Current.e_Bch=true;
+                break;
+            case jfunc.jne:
+                Current.e_Bch=!Current.ZF;
+                break;
+            case jfunc.jge:
+                Current.e_Bch=!(Current.SF^Current.OF);
+                break;
+            case jfunc.jg:
+                Current.e_Bch=(!(Current.SF^Current.OF))&&(!Current.ZF);
+                break;
+            default :
+                break;
         }
-        else if(Current.E_ifun==jfunc.je){
-            Current.e_Bch=Current.ZF;
-        }
-        else if(Current.E_ifun==jfunc.jl){
-            Current.e_Bch=Current.SF^Current.OF;
-        }
-        else if(Current.E_ifun==jfunc.jmp){
-            Current.e_Bch=true;
-        }
-        else if(Current.E_ifun==jfunc.jne){
-            Current.e_Bch=!Current.ZF;
-        }
-        else if(Current.E_ifun==jfunc.jge){
-            Current.e_Bch=!(Current.SF^Current.OF);
-        }
-        else if(Current.E_ifun==jfunc.jg){
-            Current.e_Bch=(!(Current.SF^Current.OF))&&(!Current.ZF);
-        }
+        //if(Current.E_ifun==jfunc.jle){
+        //    Current.e_Bch=(Current.SF^Current.OF)|Current.ZF;
+        //}
+        //else if(Current.E_ifun==jfunc.je){
+        //    Current.e_Bch=Current.ZF;
+        //}
+        //else if(Current.E_ifun==jfunc.jl){
+        //    Current.e_Bch=Current.SF^Current.OF;
+        //}
+        //else if(Current.E_ifun==jfunc.jmp){
+        //    Current.e_Bch=true;
+        //}
+        //else if(Current.E_ifun==jfunc.jne){
+        //    Current.e_Bch=!Current.ZF;
+        //}
+        //else if(Current.E_ifun==jfunc.jge){
+        //    Current.e_Bch=!(Current.SF^Current.OF);
+        //}
+        //else if(Current.E_ifun==jfunc.jg){
+        //    Current.e_Bch=(!(Current.SF^Current.OF))&&(!Current.ZF);
+        //}
         New.M_Bch=Current.e_Bch;
     }
     else{
@@ -829,6 +890,7 @@ function update(One){
     //console.log("ZF:%s SF:%s OF:%s",One.ZF.toString(),One.SF.toString(),One.OF.toString());
 }
 function onestep(){
+    resetkey=false;
     onecycle();
     update(Current);
 }

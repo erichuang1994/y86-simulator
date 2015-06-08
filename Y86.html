@@ -6,8 +6,9 @@
 <title>Y86-simulator Version 0.1</title>
 <link href="css/main.css" rel="stylesheet" type="text/css" />
 <!--[if IE 8]><link href="css/ie8.css" rel="stylesheet" type="text/css" /><![endif]-->
-<link href='http://fonts.useso.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' type='text/css'>
-
+	<!--加载有点慢下载到本地加载-->
+<!--<link href='http://fonts.useso.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' type='text/css'>-->
+	<link href='css/family=Open+Sans300,400,600,700.css' rel='stylesheet' type='text/css'>
 <!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>-->
 <script src="http://cdn.bootcss.com/jquery/1.7.2/jquery.min.js"></script>
 <script type="text/javascript" src="http://cdn.bootcss.com/jqueryui/1.9.2/jquery-ui.min.js"></script>
@@ -417,7 +418,7 @@
 									<li><strong id="E_dstE" class="content">0x8</strong></li>
 									<li><strong id="E_dstM" class="content">0x8</strong></li>
 									<li><strong id="E_srcA" class="content">0x8</strong></li>
-									<li><strong id="E_srcM" class="content">0x8</strong></li>
+									<li><strong id="E_srcB" class="content">0x8</strong></li>
 								</ul>
 							</div>
 							<div class="general-stats widget">
@@ -524,9 +525,10 @@
 <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>-->
 <script src="js/assets/jquery.fittext.js"></script>
 <script src="js/assets/jquery.lettering.js"></script>
-<script src="http://yandex.st/highlightjs/7.3/highlight.min.js"></script>
+<script src="js/highlight.min.js"></script>
 <!--<script src="jquery.textillate.js"></script>-->
 <script>
+	prettyPrint();
 	$(function () {
 		$('.tlt').textillate({ in: { effect: 'rollIn' } });
 		$('.content').textillate({ in: { effect: 'rollIn' }});
@@ -589,6 +591,7 @@
 			Hasload=true;
 			prettyPrint();
 			init();
+			backupIS=$.extend({},IS);
 			console.log("IS:",IS);
 		});
 	});
