@@ -922,7 +922,7 @@ span.green { background-color: #41CA83; }
 .margin { margin: 15px 14px; }
 .drag { width: 12px; height: 10px; background: url(../img/elements/interface/order.png) no-repeat; cursor: pointer; display: block; float: right; margin: 14px; }
 #sidebar .widget { margin: 25px 20px 0 20px; }
-.pre-scrollable { max-height: 340px; overflow-y: scroll; }
+.pre-scrollable { max-height: 280px; overflow-y: scroll; }
 
 
 
