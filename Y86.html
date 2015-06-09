@@ -287,13 +287,14 @@
 						<div class="well body align-center">
 							<input id="input_file" type="file" style="display:none">
 							<div class="input-append">
-								<input id="photoCover" class="input-middle" type="text">
+								<input id="photoCover" class="input-small" type="text">
 								<!--<button class="btn" onclick="$('input[id=input_file]').click();">Load</button>-->
 								<button type="button" class="btn btn-primary" onclick="$('input[id=input_file]').click();"><b class="ico-upload"></b> Load</button>
                                 <button type="button" class="btn btn-success" onclick="save()"><b class="icon-download"></b>save</button>
 								<button type="button" class="btn btn-warning" onclick="reset()"><b class="ico-refresh"></b> Reset</button>
+								<button type="button" class="btn" onclick="last()"><b class="ico-arrow-left"></b> last</button>
 							</div>
-							<button type="button" class="btn btn-info" onclick="moha()" id="run"><b class="ico-play"></b>Run</button>
+							<button type="button" class="btn btn-info" onclick="run()" id="run"><b class="ico-play"></b>Run</button>
 							<button type="button" class="btn btn-primary" onclick="pause()"><b class="ico-pause"></b> Pause</button>
 							<button type="button" class="btn btn-danger" onclick="step()"><b class="ico-step-forward"></b> Step</button>
 							<!--<button type="button" class="btn btn-success" onclick="moha()"><b class="icon-star"></b> 1Hz</button>-->
@@ -520,7 +521,7 @@
 
 <!--<div style="display:none"><script src='http://v7.cnzz.com/stat.php?id=155540&web_id=155540' language='JavaScript' charset='gb2312'></script></div>-->
 </body>
-<script src="y86.js">
+<script src="js/y86.js">
 </script>
 
 <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>-->

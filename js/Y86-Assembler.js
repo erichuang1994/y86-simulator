@@ -233,6 +233,7 @@ function assembler(input){
                 if(D==""){
                   D=0;
                 }
+                D=parseInt(D);
                 list[x].bin=instr[list[x].ins[0]]+R[rA]+R[rB]+tlend(D.toString(16));
                 break;
             case ".long" :
@@ -285,5 +286,23 @@ function Complier(){
     $("#code").empty();
     $("#code").append(oriresult);
     $("#mcode").append(output);
+    prettyPrint();
+}
+function save() {
+    // works in firefox, and chrome 11
+    //var text ="hello world\n \tI can fan";
+    var blob=new Blob([output], {type: "text/plain;charset=utf-8"});
+    //var data = "data:x-application/text,"+encodeURIComponent(savestr);
+    //window.open(data);
+    saveAs(blob,"asum.yo");
+}
+function reset(){
+    input=[];
+    output="";
+    var str="import y86\nprint\"Life is short,I use Python!\"";
+    $("#mcode").empty();
+    $("#code").empty();
+    $("#code").append(str);
+    $("#mcode").append(str);
     prettyPrint();
 }

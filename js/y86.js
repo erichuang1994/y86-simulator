@@ -159,25 +159,25 @@ function tlend(str){
 var Current;
 var New;
 var Temp;
-function run(){
-    //for(var x=1;x<=61;x++){
-    //    if(!onecycle())
-    //        break;
-    //}
-    resetkey=false;
-    if(Hasload==false){
-        alert("跑也要按照基本法呀，中国有句古话，叫有代码才能跑！");
-        $('input[id=input_file]').click();
-        return false;
-    }
-    do{
-        update(Current);
-    }while(onecycle());
-    //update(Current);
-}
+//function run(){
+//    //for(var x=1;x<=61;x++){
+//    //    if(!onecycle())
+//    //        break;
+//    //}
+//    resetkey=false;
+//    if(Hasload==false){
+//        alert("跑也要按照基本法呀，中国有句古话，叫有代码才能跑！");
+//        $('input[id=input_file]').click();
+//        return false;
+//    }
+//    do{
+//        update(Current);
+//    }while(onecycle());
+//    //update(Current);
+//}
 var Hz;
 var Pause=false;
-function moha(){
+function run(){
     //for(var x=1;x<=61;x++){
     //    if(!onecycle())
     //        break;
@@ -229,7 +229,7 @@ $('.content').on('outAnimationEnd.tlt', function () {
 });
 //reset
 function reset(){
-    if(resetkey===true) {
+    if(resetkey==true) {
         resetkey=false;
         $('.content').textillate('out');
     }else {
@@ -238,7 +238,7 @@ function reset(){
         Current=CycleStore.createNew();
         update(Current);
         //$('.content').textillate('in');
-        savestr=""
+        savestr="";
         $("#Stack").empty();
     }
 }
@@ -269,7 +269,7 @@ function debug(){
 var savestr="";
 function save() {
         // works in firefox, and chrome 11
-        var text ="hello world\n \tI can fan";
+        //var text ="hello world\n \tI can fan";
         var blob=new Blob([savestr], {type: "text/plain;charset=utf-8"});
         //var data = "data:x-application/text,"+encodeURIComponent(savestr);
         //window.open(data);
@@ -890,6 +890,9 @@ function update(One){
     //console.log("ZF:%s SF:%s OF:%s",One.ZF.toString(),One.SF.toString(),One.OF.toString());
 }
 function onestep(){
+    if(!Hasload){
+        alert("跑也要按照基本法呀，中国有句古话，叫有代码才能跑!");
+    }
     resetkey=false;
     onecycle();
     update(Current);
@@ -934,4 +937,25 @@ function showcycle(One){
     //ShowR();
     //console.log(One);
     console.log("\n");
+}
+function last(){
+    var newcyclenum=Current.cyclenum-1;
+    init();
+    IS=$.extend({},backupIS);
+    //update(Current);
+    //$('.content').textillate('in');
+    savestr=""
+    $("#Stack").empty();
+    resetkey=false;
+    Pause=false;
+    if(Hasload==false){
+        alert("跑也要按照基本法呀，中国有句古话，叫有代码才能跑！");
+        $('input[id=input_file]').click();
+        return false;
+    }
+
+    while(Current.cyclenum!=newcyclenum) {
+        onecycle();
+    }
+    update(Current);
 }
