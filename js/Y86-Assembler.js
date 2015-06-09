@@ -1,11 +1,7 @@
 /**
  * Created by eric on 6/7/15.
+ * q465168867@gmail.com
  */
-//It was based on python-y86(https://github.com/linusyang/python-y86) authored by linusyang
-//    This program is free software: you can redistribute it and/or modify
-//    it under the terms of the GNU General Public License as published by
-//    the Free Software Foundation, either version 3 of the License, or
-//    (at your option) any later version.
 var R={"%eax":"0","%ecx":"1","%edx":"2","%ebx":"3","%esp":"4","%ebp":"5","%esi":"6","%edi":"7",none:"8"};
 var stat={SAOK:1,SADR:2,SINS:3,SHLT:4};
 var instr={
@@ -85,9 +81,7 @@ function hexaddress(x){
 }
 var output="";
 function assembler(input){
-    //去掉注释
-    //delete annotation
-    //input=input.replace(/:/g,':\n');
+    //去掉注释 多余的空格
     input=input.replace(/\/\*.*?\*\//g,'');
     input=input.replace(/#.*/g,'');
     input=input.replace(/ *, +/g,',');
@@ -153,21 +147,23 @@ function assembler(input){
             continue;
         }
         bias=0;
-        //去掉指令中的怪符号
-        list[x].ins[0]=list[x].ins[0].replace(/\n/g,'');
+        ////去掉指令中的怪符号
+        //list[x].ins[0]=list[x].ins[0].replace(/\n/g,'');
+        //判断指令是否合法
         if(instbyte[list[x].ins[0]]!=undefined){
             bias=instbyte[list[x].ins[0]];
         }else if(bytelen[list[x].ins[0]]!=undefined){
             bias=bytelen[list[x].ins[0]];
         }
         else{
-            alert(list[x].ins[0]);
+            alert("指令",list[x].ins[0],"不存在!");
         }
         list[x].nextaddress=list[x].address+bias;
         //list[x].instr=temp.slice();
     }
     //替换label
     //replace labe
+    //处理指令，将翻译出来的机器码先存在instr[x].bin里
     for(var x=0;x<listlen;x++){
         console.log(list[x]);
         switch(list[x].ins[0]){
@@ -248,6 +244,7 @@ function assembler(input){
                 break;
         }
         var out;
+        //格式化输出
         switch(list[x].bin.length){
             case 12:
                 out=" "+hexaddress(list[x].address)+": "+list[x].bin+" "+"|"+list[x].ori;
@@ -285,6 +282,7 @@ function assembler(input){
         //console.log("address:",list[x].address);
     }
 }
+//执行编译并显示
 function Complier(){
     $("#mcode").empty();
     $("#code").empty();
@@ -292,6 +290,7 @@ function Complier(){
     $("#mcode").append(output);
     prettyPrint();
 }
+//保存
 function save() {
     // works in firefox, and chrome 11
     //var text ="hello world\n \tI can fan";
@@ -300,6 +299,7 @@ function save() {
     //window.open(data);
     saveAs(blob,"asum.yo");
 }
+//重置
 function reset(){
     input=[];
     output="";

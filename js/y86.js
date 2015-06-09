@@ -1,5 +1,8 @@
-//TODO:Debug,OF处理
-//枚举icode,register,ifun,值得注意的是cmovl与rrmovl都是2
+/**
+ * Created by eric.
+ * q465168867@gmail.com
+ */
+//枚举icode,register,ifun
 var icode={nop:"0",halt:"1",rrmovl:"2",irmovl:"3",rmmovl:"4",mrmovl:"5",opl:"6",jxx:"7",cmovxx:"2",call:"8",ret:"9",pushl:"a",popl:"b"};
 var ficode=["0","1","2","3","4","5","6","7","8","9","a","b"];
 var oplfunc={addl:"0",subl:"1",andl:"2",xorl:"3"};
@@ -126,13 +129,13 @@ function ShowR(){
 function init(){
     for(var x in R){
         r[R[x]]=0;
-        console.log("init register ", R[x]);
+        //console.log("init register ", R[x]);
     }
     Current=CycleStore.createNew();
     New=CycleStore.createNew();
     //r[R.esp]=244;
     //r[R.ebp]=244;
-    console.log("init success");
+    //console.log("init success");
 }
 
 //判断某个元素在不在数组中
@@ -251,6 +254,7 @@ function reinit(){
     savestr=""
     $("#Stack").empty();
 }
+//JS支持执行传入的字符串，可以拿来debug，更进一步的处理以后再搞
 function debug(){
     var execstr=$("#Debug").val();
     try  {
@@ -265,7 +269,7 @@ function debug(){
     $("#Debug").val("");
 }
 
-//save
+//savestr用来到出数据
 var savestr="";
 function save() {
         // works in firefox, and chrome 11
@@ -287,7 +291,7 @@ function hex3bit(num){
 var readtemplate="<p id=\"{0}\" class=\"muted\">0x{1}:{2}</p>";
 var writetemplate="<p class=\"text-warning\">0x{0}:{1}</p>";
 var nurmaltemplate="<p class=\"muted\">0x{0}:{1}</p>";
-//todo:动画特效，栈只会减不会加，所以发生读写的时候再更新即可
+//栈发生读取的时候更新显示
 function readupdate(mem_addr,val){
     var par="#Stack"+mem_addr.toString();
     //console.log("parameter:",par);
@@ -304,6 +308,7 @@ function readupdate(mem_addr,val){
             });
     }
 }
+//栈发生写入的时候更新显示
 function writeupdate(mem_addr,val){
     var par="#Stack"+mem_addr.toString();
     var htmltext="<p id=\"Stack{0}\" class=\"muted\">{1}:0x{2}</p>";
@@ -339,7 +344,7 @@ function writeupdate(mem_addr,val){
         //$(par).html(val);
     }
 }
-//animations
+//动画测试使用
 function animation(){
     //$('#animationstest').animo( { animation: 'tada' } );
     //$('#ZF').animo( { animation: 'bounceInRight', duration: 2 });
@@ -357,6 +362,7 @@ function animation(){
     });
 }
 //执行单个周期
+//主要是依据助教给的scan的HCL
 function onecycle(){
     if(Current.W_icode==icode.halt){
         return false;
@@ -785,6 +791,7 @@ function onecycle(){
     return true;
     //showcycle(New);
 }
+//将整数转成32位十六进制字符串
 function show32bit(num){
     str=(num>>>0).toString(16);
     var len=str.length;
@@ -793,10 +800,11 @@ function show32bit(num){
     }
     return "0x"+str;
 }
+//转十六进制字符串
 function hex(num){
     return "0x"+num.toString(16);
 }
-//String format
+//String format函数，传入模板与参数即可
 String.format = function(src){
     if (arguments.length == 0) return null;
     var args = Array.prototype.slice.call(arguments, 1);
@@ -804,6 +812,7 @@ String.format = function(src){
         return args[i];
     });
 };
+//output模板
 var template="Cycle_{0}\n" +
     "--------------------\n" +
     "FETCH:\n" +
@@ -838,6 +847,7 @@ var template="Cycle_{0}\n" +
     "\tW_valM\t\t= {25}\n" +
     "\tW_DstE\t\t= {26}\n" +
     "\tW_dstM\t\t= {27}\n\n";
+//更新浏览器显示，以及保存执行结果到savestr以方便导出
 function update(One){
     //set savestr ,it's a bad implement
     savestr=savestr+String.format(template,One.cyclenum,show32bit(One.F_predPC),
@@ -889,6 +899,7 @@ function update(One){
     $("#OF").html(One.OF==true?1:0);
     //console.log("ZF:%s SF:%s OF:%s",One.ZF.toString(),One.SF.toString(),One.OF.toString());
 }
+//单步执行
 function onestep(){
     if(!Hasload){
         alert("跑也要按照基本法呀，中国有句古话，叫有代码才能跑!");
@@ -897,6 +908,7 @@ function onestep(){
     onecycle();
     update(Current);
 }
+//测试使用
 function showcycle(One){
     //console.log("Current pc 0x:",One.f_pc.toString(16));
     console.log("Cycle_",One.cyclenum);
@@ -938,6 +950,7 @@ function showcycle(One){
     //console.log(One);
     console.log("\n");
 }
+//单步回退，暂时实现为直接从头开始跑
 function last(){
     var newcyclenum=Current.cyclenum-1;
     init();
