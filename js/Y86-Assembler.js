@@ -95,6 +95,8 @@ function assembler(input){
     input=input.replace(/(\n)+/g,'\n');
     input=input.replace(/^\n/g,'');
     input=input.replace(/(\S) +(\S)/g,"$1 $2");
+    //去掉回车符
+    input=input.replace(/\r/g,'');
     New=input;
     backup=New.split('\n');
     var len=backup.length;
@@ -151,6 +153,8 @@ function assembler(input){
             continue;
         }
         bias=0;
+        //去掉指令中的怪符号
+        list[x].ins[0]=list[x].ins[0].replace(/\n/g,'');
         if(instbyte[list[x].ins[0]]!=undefined){
             bias=instbyte[list[x].ins[0]];
         }else if(bytelen[list[x].ins[0]]!=undefined){
