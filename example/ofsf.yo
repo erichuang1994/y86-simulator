@@ -1,0 +1,13 @@
+  0x0000:              | .pos 0
+  0x0000:              | Init:
+  0x0000: 30f500010000 |     irmovl Stack, %ebp
+  0x0006: 30f400010000 |     irmovl Stack, %esp
+  0x000c: 30f0ffffffff |     irmovl $-1, %eax
+  0x0012: 30f200000000 |     irmovl $0, %edx
+  0x0018: 6002         |     addl %eax, %edx
+  0x001a: 30f000000080 |     irmovl $0x80000000, %eax
+  0x0020: 6000         |     addl %eax, %eax
+  0x0022: 10	       |
+  0x0023:              | .pos 0x100
+  0x0100:              | Stack:
+
