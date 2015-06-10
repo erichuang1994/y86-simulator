@@ -144,8 +144,7 @@ function inArray(a,b){
 }
 //小端转大端
 function lend(str){
-    console.log("type of str",typeof(str));
-    console.log()
+    //console.log("type of str",typeof(str));
     substr=str.substr(6,2)+str.substr(4,2)+str.substr(4,2)+str.substr(2,2)+str.substr(0,2);
     return substr;
 }
@@ -674,7 +673,7 @@ function onecycle(){
 
     //进行读写
     if(mem_read){
-        console.log("read 0x%s value=%s",mem_addr.toString(16),IS[mem_addr]);
+        //console.log("read 0x%s value=%s",mem_addr.toString(16),IS[mem_addr]);
         Current.m_valM=parseInt(lend(IS[mem_addr]),16);
         readupdate(mem_addr,IS[mem_addr]);
         New.W_valM=Current.m_valM;
