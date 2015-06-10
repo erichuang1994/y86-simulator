@@ -57,7 +57,9 @@ var bytelen={
     ".align":0
 }
 var New;
+//存储指令的数组
 var list=[];
+//储存label的字典，索引是labelname，值是地址
 var label={};
 //字符串转小端字符串
 //change str to little end
@@ -80,6 +82,10 @@ function hexaddress(x){
     return "0x"+temp;
 }
 var output="";
+//这是汇编的核心部分
+//思路是首先处理下字符串，去掉空格 空行注释等多余的部分
+//然后先循环第一次计算出各条指令的地址
+//再循环一次翻译指令，将label替换成对应的地址
 function assembler(input){
     //去掉注释 多余的空格
     input=input.replace(/\/\*.*?\*\//g,'');
@@ -282,7 +288,9 @@ function assembler(input){
         //console.log("address:",list[x].address);
     }
 }
-//执行编译并显示
+//执行汇编并显示
+//不过为了更好地体验，在载入时实际的汇编就已经完成
+//此函数不过是把载入时的汇编结果显示出来
 function Complier(){
     $("#mcode").empty();
     $("#code").empty();
@@ -291,6 +299,8 @@ function Complier(){
     prettyPrint();
 }
 //保存
+//此函数用来保存汇编文件到本地
+//使用了FileSaver.js(感谢老豪神推荐）
 function save() {
     // works in firefox, and chrome 11
     //var text ="hello world\n \tI can fan";

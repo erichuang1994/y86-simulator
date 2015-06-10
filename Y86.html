@@ -568,21 +568,26 @@
 				return;
 			}
 //            alert(result);
+			//将读入的内容按行分割
 			IsaArray=result.split("\n");
 			$("#code").empty();
 			var temp;
 			var is;
-			var code='';
+			var code=result;
 			for(var  x in IsaArray) {
 //				show=IsaArray[x];
-				code=code+IsaArray[x]+'\n';
+//				code=code+IsaArray[x]+'\n';
+				//按注释的 “|”分割字符串
 				temp=IsaArray[x].split("|");
 				is=temp[0].split()
 //				console.log(temp[1]);
+				//储存注释
 				DesArray[x]=temp[1];
+				//储存指令
 				IsaArray[x]=temp[0];
 //				$("#code").append(IsaArray[x]);
 //				$("#isa").append()
+				//按“：”分割出指令和地址
 				is=temp[0].split(":");
 				if(is[1]&&is[1].length>1){
 					//$.trim(is[1])去掉字符串首末空格 parseInt()将字符串转为整数
@@ -593,8 +598,9 @@
 			Hasload=true;
 			prettyPrint();
 			init();
+			//备份原始指令
 			backupIS=$.extend({},IS);
-			console.log("IS:",IS);
+//			console.log("IS:",IS);
 		});
 	});
 	/*

@@ -360,7 +360,7 @@ function animation(){
         springMass: 10,
     });
 }
-//执行单个周期
+//此函数为模拟器的核心部分
 //主要是依据助教给的scan的HCL
 function onecycle(){
     if(Current.W_icode==icode.halt){
