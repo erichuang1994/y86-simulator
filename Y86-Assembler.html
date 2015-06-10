@@ -402,6 +402,7 @@ $(function () {
     $("#code").append(str);
     $("#mcode").append(str);
     prettyPrint()
+    //动画效果
     $('.tlt').textillate({ in: { effect: 'rollIn' } });
     $('.content').textillate({ in: { effect: 'rollIn' }});
 })
@@ -431,6 +432,7 @@ $(function () {
                 return;
             }
 //            console.log(result);
+            //储存原始字符串
             oriresult=result;
             input=result;
             $("#code").empty();

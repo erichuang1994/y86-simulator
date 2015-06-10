@@ -102,6 +102,7 @@ function assembler(input){
     var len=backup.length;
     for(var x=0;x<len;x++){
         if(backup[x]!="")
+        //以字典的形式存储指令到数组list中
         list.push({"ori":backup[x]});
     }
     console.log(list);

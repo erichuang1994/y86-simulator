@@ -208,7 +208,7 @@ function run(){
 function pause(){
     Pause=true;
 }
-//run in 1HZ
+//以指定的频率执行
 function onehz(){
     if(Pause==false) {
         update(Current);
@@ -220,8 +220,13 @@ function onehz(){
 }
 
 //step
+//单步执行
 function step(){
     Pause=false;
+    if(Hasload==false){
+        alert("跑也要按照基本法呀，中国有句古话，叫有代码才能跑!");
+        return ;
+    }
     if(onecycle()) {
         update(Current);
     }
@@ -258,12 +263,13 @@ function debug(){
     var execstr=$("#Debug").val();
     try  {
          eval(execstr);
+        update(Current);
         //$("#Debug").val()="";
     }
     catch(exception) {
         alert(exception);
         alert("非法指令")
-        console.log("inster:",execstr);
+        //console.log("inster:",execstr);
     }
     $("#Debug").val("");
 }
@@ -296,7 +302,7 @@ function readupdate(mem_addr,val){
     //console.log("parameter:",par);
     //$(par).animo({ animation: 'bounceInRight', duration: 2 });
     if($(par)[0]!=undefined) {
-        console.log($(par));
+        //console.log($(par));
         move(par)
             .set('background-color', 'pink')
             .duration(1000)
@@ -325,7 +331,7 @@ function writeupdate(mem_addr,val){
     }
     else{
         var str=String.format(htmltext,mem_addr.toString(),hex3bit(mem_addr),val);
-        console.log("insert:",str);
+        //console.log("insert:",str);
         $("#Stack").prepend(str);
         $(par).textillate({ in: { effect: 'rollIn',sync: true, } });
         //$(par).snabbt({
@@ -388,20 +394,6 @@ function onecycle(){
         }
     }
     New.is=Current.is;
-    //if(Current.cyclenum==5) {
-    //    console.log("Current f_pc:",Current.f_pc);
-    //    console.log("Current is:",Current.is);
-    //}
-    //if()
-    //if(inArray(icode.ret, [Current.D_icode,Current.E_icode,Current.M_icode]))
-    //{
-    //    Current.f_icode=icode.nop;
-    //    Current.f_ifun=Current.D_ifun;
-    //}
-    //else{
-    //    Current.f_icode=Current.is[0];
-    //    Current.f_ifun=Current.is[1];
-    //}
     Current.f_icode=Current.is[0];
     New.D_icode=Current.f_icode;
     Current.f_ifun=Current.is[1];
@@ -503,9 +495,9 @@ function onecycle(){
     New.E_srcA=Current.d_srcA;
     New.E_valA=r[New.E_srcA];
     New.E_valB=r[New.E_srcB];
-    if(Current.cyclenum==5){
-        console.log("E_valA:%d E_valB:%d",New.E_valA,New.E_valB);
-    }
+    //if(Current.cyclenum==5){
+    //    console.log("E_valA:%d E_valB:%d",New.E_valA,New.E_valB);
+    //}
     //console.log()
 
     //Execute Stage
