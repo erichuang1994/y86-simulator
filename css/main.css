@@ -105,7 +105,7 @@ button.close { padding: 0; cursor: pointer; background: transparent; border: 0; 
 .row-fluid:before, .row-fluid:after { display: table; line-height: 0; content: ""; }
 .row-fluid:after { clear: both; }
 .row-fluid [class*="span"] { display: block; float: left; width: 100%; margin-left: 2.127659574468085%; *margin-left: 2.074468085106383%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
-.row-fluid [class*="span"]:first-child { margin-left: 30; }
+.row-fluid [class*="span"]:first-child { margin-left: 0; }
 .row-fluid .controls-row [class*="span"] + [class*="span"] { margin-left: 2.127659574468085%; }
 
 .row-fluid .span12 { width: 100%; *width: 99.94680851063829%; }
@@ -2584,7 +2584,7 @@ input:focus:invalid:focus, textarea:focus:invalid:focus, select:focus:invalid:fo
     -moz-box-sizing: border-box;
     box-sizing: border-box;
   }
-  .row-fluid [class*="span"]:first-child { margin-right:30 }
+  .row-fluid [class*="span"]:first-child { margin-right:0 }
   .row-fluid .controls-row [class*="span"] + [class*="span"] { margin-left: 2.7624309392265194%; }
   .row-fluid .span12 { width: 100%; *width: 99.94680851063829%; }
   .row-fluid .span11 { width: 91.43646408839778%; *width: 91.38327259903608%; }
@@ -2858,5 +2858,8 @@ input:focus:invalid:focus, textarea:focus:invalid:focus, select:focus:invalid:fo
   .options-bar > li:last-child { float: right; }
   .bar-entries { display: none; }
 
+}
+*.span8{
+    margin-left: 10px;
 }
 
