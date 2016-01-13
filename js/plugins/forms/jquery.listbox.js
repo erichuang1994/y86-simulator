@@ -1,4 +1,4 @@
-﻿/*
+/*
 *       Developed by Justin Mead
 *       ©2011 MeadMiracle
 *		www.meadmiracle.com / meadmiracle@gmail.com
