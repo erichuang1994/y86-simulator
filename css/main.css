@@ -2590,7 +2590,7 @@ input:focus:invalid:focus, textarea:focus:invalid:focus, select:focus:invalid:fo
   .row-fluid .span11 { width: 91.43646408839778%; *width: 91.38327259903608%; }
   .row-fluid .span10 { width: 82.87292817679558%; *width: 82.81973668743387%; }
   .row-fluid .span9 { width: 74.30939226519337%; *width: 74.25620077583166%; }
-  .row-fluid .span8 { width: 60.74585635359117%; *width: 60.69266486422946%; }
+  .row-fluid .span8 { width: 60.8%; *width: 60.69266486422946%; }
 /*65.69266486422946%*/
   .row-fluid .span7 { width: 57.18232044198895%; *width: 57.12912895262725%; }
   .row-fluid .span6 { width: 48.61878453038674%; *width: 48.56559304102504%; }
